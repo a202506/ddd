@@ -3,7 +3,23 @@
     "allow": [
       "WebSearch",
       "WebFetch(domain:pooya.blog)",
-      "WebFetch(domain:codewithmukesh.com)"
+      "WebFetch(domain:codewithmukesh.com)",
+      "Bash(grep -v '^\\\\.$\\(applicationId\\)\\\\|^androidx\\\\|^android')",
+      "Bash(awk -F: '{print $2}')",
+      "Bash(sort -u grep -oE 'R\\\\.string\\\\.[a-zA-Z_]+' /Users/ying/ddd/app/src/main/java -r)",
+      "Bash(sort -u sort -u /tmp/used_strings.txt grep -oE 'name=\"[a-zA-Z_]+\"' /Users/ying/ddd/app/src/main/res/values/strings.xml)",
+      "Bash(sort -u echo \"--- USED but NOT DEFINED ---\" comm -23 /tmp/used_strings_uniq.txt /tmp/defined_strings.txt echo \"--- DEFINED but NOT USED ---\" comm -13 /tmp/used_strings_uniq.txt /tmp/defined_strings.txt)",
+      "Bash(sort -u grep -oE 'R\\\\.string\\\\.[a-zA-Z_][a-zA-Z0-9_]*' /Users/ying/ddd/app/src/main/java -r)",
+      "Bash(sort -u sort -u /tmp/used_strings.txt grep -oE 'name=\"[a-zA-Z_][a-zA-Z0-9_]*\"' /Users/ying/ddd/app/src/main/res/values/strings.xml)",
+      "Bash(sort -u grep -roE 'R\\\\.\\(drawable|menu|mipmap|xml|color|layout|style\\)\\\\.[a-zA-Z_][a-zA-Z0-9_]*' /Users/ying/ddd/app/src/main/java)",
+      "Bash(sort -u sort -u /tmp/used_res.txt -o /tmp/used_res.txt)",
+      "Bash(sort -u grep -roE 'R\\\\.string\\\\.[a-zA-Z_][a-zA-Z0-9_]*' /Users/ying/ddd/app/src/main/java)",
+      "Bash(sort -u echo \"USED but NOT DEFINED \\(real bugs\\):\" comm -23 /tmp/used_strings_uniq.txt /tmp/defined_strings.txt)",
+      "Bash(grep -v '^@string/cancel$')",
+      "Bash(sort -u echo \"Kotlin binding.* that has no @+id in any layout:\" comm -23 /tmp/kotlin_binding_ids.txt /tmp/layout_ids.txt)"
+    ],
+    "additionalDirectories": [
+      "/Users/ying/ddd"
     ]
   }
 }

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">钉钉打卡助手</string>
-    <string name="app_name_en" translatable="false">DingClock</string>
 
     <!-- Main -->
-    <string name="phase0_hello">脚手架就绪。下次构建将逐步加入配置、状态机和调度。</string>
-    <string name="phase1_done_hint">Phase 1 已就位：配置已加密保存，密码可解密验证。下一步将加入日志页、DryRun 与节点 dump 工具（Phase 2）。</string>
-    <string name="phase2_done_hint">Phase 2 已就位：无障碍服务、应用内日志页、DryRun 工具与通知栏 Dump 入口。下一步将驱动飞行模式 Switch（Phase 3）。</string>
-    <string name="phase3_done_hint">Phase 3 已就位：DryRun 中可一键关/开飞行模式（自动跳设置→识别 Switch→翻转→回退）。下一步：等 WiFi 自动连上、启动钉钉并识别页面（Phase 4）。</string>
     <string name="phase8_done_hint">全部 Phase 已就位：Setup 完成后 AlarmManager+WorkManager 自动调度；DryRun 可端到端试打；失败通过钉钉机器人 webhook 通知。生产前请在 1 部 vivo 上跑一周再批量推。</string>
     <string name="main_accessibility_on">无障碍服务：✓ 已开启</string>
     <string name="main_accessibility_off">无障碍服务：✗ 未开启（前往 DryRun 页可一键打开）</string>
@@ -65,11 +60,8 @@
     <string name="custom_holidays_help">每行一个 yyyy-MM-dd，例如 2026-05-01</string>
 
     <!-- Permissions -->
-    <string name="setup_permissions_hint">必备权限（vivo 详细引导见 Phase 8）</string>
-    <string name="setup_permissions_phase8_note">本步占位。Phase 8 会针对 vivo Funtouch / OriginOS 增加自启动、后台弹出、锁屏显示等 9 项一键引导。当前可手动开启下面三项最关键的：</string>
+    <string name="setup_permissions_hint">必备权限（9 项一键引导）</string>
     <string name="open_accessibility_settings">开启无障碍服务</string>
-    <string name="open_battery_settings">忽略电池优化</string>
-    <string name="open_app_details">应用详情（手动开自启动等）</string>
     <string name="intent_unavailable">系统不支持该跳转，请手动到设置中查找。</string>
 
     <!-- Notify -->
@@ -77,8 +69,6 @@
     <string name="setup_notify_help">推荐建一个钉钉群 → 群机器人 → 自定义机器人，启用加签后把 Webhook URL 与 Secret 填到下面。打卡失败、需短信验证等异常会发到这个群。</string>
     <string name="field_webhook_url">Webhook URL</string>
     <string name="field_webhook_secret">加签 Secret</string>
-    <string name="webhook_test_phase6_pending">发送测试消息（Phase 6 启用）</string>
-
     <!-- Accessibility service -->
     <string name="accessibility_service_description">用于自动驱动「设置 → 飞行模式」开关与钉钉打卡界面。开启后通知栏会出现一个「Dump」按钮，可在任意界面抓取节点树到本应用日志，便于调试。</string>
     <string name="notif_status_title">钉钉打卡助手</string>
