@@ -38,6 +38,70 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ui.setup.SetupActivity"
+            android:exported="false"
+            android:label="@string/setup_title"
+            android:parentActivityName=".ui.MainActivity"/>
+
+        <activity
+            android:name=".ui.logs.LogsActivity"
+            android:exported="false"
+            android:label="@string/logs_title"
+            android:parentActivityName=".ui.MainActivity"/>
+
+        <activity
+            android:name=".ui.dryrun.DryRunActivity"
+            android:exported="false"
+            android:label="@string/dryrun_title"
+            android:parentActivityName=".ui.MainActivity"/>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+        </provider>
+
+        <service
+            android:name=".accessibility.DingAccessibilityService"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config"/>
+        </service>
+
+        <service
+            android:name=".service.PunchForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
+            <property
+                android:name="android.app.PROPERTY_SPECIAL_USE_FGS_SUBTYPE"
+                android:value="auto_attendance_on_behalf"/>
+        </service>
+
+        <receiver
+            android:name=".scheduler.PunchAlarmReceiver"
+            android:exported="false"/>
+
+        <receiver
+            android:name=".scheduler.BootReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.LOCKED_BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED"/>
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

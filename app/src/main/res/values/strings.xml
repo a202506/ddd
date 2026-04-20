@@ -2,5 +2,169 @@
 <resources>
     <string name="app_name">钉钉打卡助手</string>
     <string name="app_name_en" translatable="false">DingClock</string>
+
+    <!-- Main -->
     <string name="phase0_hello">脚手架就绪。下次构建将逐步加入配置、状态机和调度。</string>
+    <string name="phase1_done_hint">Phase 1 已就位：配置已加密保存，密码可解密验证。下一步将加入日志页、DryRun 与节点 dump 工具（Phase 2）。</string>
+    <string name="phase2_done_hint">Phase 2 已就位：无障碍服务、应用内日志页、DryRun 工具与通知栏 Dump 入口。下一步将驱动飞行模式 Switch（Phase 3）。</string>
+    <string name="phase3_done_hint">Phase 3 已就位：DryRun 中可一键关/开飞行模式（自动跳设置→识别 Switch→翻转→回退）。下一步：等 WiFi 自动连上、启动钉钉并识别页面（Phase 4）。</string>
+    <string name="phase8_done_hint">全部 Phase 已就位：Setup 完成后 AlarmManager+WorkManager 自动调度；DryRun 可端到端试打；失败通过钉钉机器人 webhook 通知。生产前请在 1 部 vivo 上跑一周再批量推。</string>
+    <string name="main_accessibility_on">无障碍服务：✓ 已开启</string>
+    <string name="main_accessibility_off">无障碍服务：✗ 未开启（前往 DryRun 页可一键打开）</string>
+    <string name="main_dryrun">DryRun 工具</string>
+    <string name="main_logs">查看日志</string>
+    <string name="main_not_configured">尚未配置。点下方按钮进入向导，填好账号、时间、权限和通知。</string>
+    <string name="main_open_setup">开始配置</string>
+    <string name="main_edit_setup">编辑配置</string>
+    <string name="main_decrypt_check">验证密码可解密</string>
+    <string name="no_colleague_name">（未填写姓名）</string>
+    <string name="label_phone">手机号：%1$s</string>
+    <string name="label_schedule">上班 %1$s · 下班 %2$s （±%3$d 秒抖动）</string>
+    <string name="label_wifi">WiFi：%1$s</string>
+    <string name="label_holiday_weekends">节假日：默认双休</string>
+    <string name="label_holiday_custom">节假日：自定义清单（%1$d 天）</string>
+    <string name="label_password_saved">密码：已加密保存</string>
+    <string name="label_password_missing">密码：未保存</string>
+    <string name="label_webhook_set">通知 webhook：已配置</string>
+    <string name="label_webhook_missing">通知 webhook：未配置</string>
+    <string name="decrypt_ok">解密 OK：%1$s（共 %2$d 位）</string>
+    <string name="decrypt_failed">解密失败，请重新输入密码</string>
+
+    <!-- Setup -->
+    <string name="setup_title">配置向导</string>
+    <string name="setup_prev">上一步</string>
+    <string name="setup_next">下一步</string>
+    <string name="setup_finish">完成</string>
+    <string name="setup_saved">配置已保存</string>
+    <string name="setup_err_phone_required">请填写手机号</string>
+    <string name="setup_err_password_required">请填写密码</string>
+    <string name="setup_err_ssid_required">请填写 WiFi SSID</string>
+
+    <!-- Account -->
+    <string name="setup_account_hint">本机对应同事的钉钉账号</string>
+    <string name="setup_account_security_note">密码使用 Android Keystore（AES-256-GCM）加密后再写入加密的 SharedPreferences，本机重启后仍可解密。卸载本应用即丢失。</string>
+    <string name="field_colleague">同事姓名（仅本机显示）</string>
+    <string name="field_phone">钉钉手机号</string>
+    <string name="field_password">钉钉密码</string>
+    <string name="password_pending_save">将在完成时加密保存</string>
+    <string name="password_already_saved">已加密保存（留空表示沿用旧密码）</string>
+    <string name="password_not_set">尚未保存密码</string>
+
+    <!-- Schedule -->
+    <string name="setup_schedule_hint">打卡时间与 WiFi 配置</string>
+    <string name="field_morning_time">上班打卡时间</string>
+    <string name="field_evening_time">下班打卡时间</string>
+    <string name="field_jitter">随机抖动（秒）</string>
+    <string name="field_wifi_ssid">现场 WiFi SSID</string>
+    <string name="fill_current_ssid">填入当前连接的 WiFi</string>
+    <string name="ssid_needs_location">读取当前 SSID 需要定位权限。请手动输入。</string>
+    <string name="ssid_unavailable">无法读取当前 SSID。请手动输入。</string>
+    <string name="field_holiday_mode">节假日策略</string>
+    <string name="holiday_use_custom_list">使用自定义节假日清单（默认仅双休）</string>
+    <string name="field_custom_holidays">自定义节假日</string>
+    <string name="custom_holidays_help">每行一个 yyyy-MM-dd，例如 2026-05-01</string>
+
+    <!-- Permissions -->
+    <string name="setup_permissions_hint">必备权限（vivo 详细引导见 Phase 8）</string>
+    <string name="setup_permissions_phase8_note">本步占位。Phase 8 会针对 vivo Funtouch / OriginOS 增加自启动、后台弹出、锁屏显示等 9 项一键引导。当前可手动开启下面三项最关键的：</string>
+    <string name="open_accessibility_settings">开启无障碍服务</string>
+    <string name="open_battery_settings">忽略电池优化</string>
+    <string name="open_app_details">应用详情（手动开自启动等）</string>
+    <string name="intent_unavailable">系统不支持该跳转，请手动到设置中查找。</string>
+
+    <!-- Notify -->
+    <string name="setup_notify_hint">失败告警 webhook</string>
+    <string name="setup_notify_help">推荐建一个钉钉群 → 群机器人 → 自定义机器人，启用加签后把 Webhook URL 与 Secret 填到下面。打卡失败、需短信验证等异常会发到这个群。</string>
+    <string name="field_webhook_url">Webhook URL</string>
+    <string name="field_webhook_secret">加签 Secret</string>
+    <string name="webhook_test_phase6_pending">发送测试消息（Phase 6 启用）</string>
+
+    <!-- Accessibility service -->
+    <string name="accessibility_service_description">用于自动驱动「设置 → 飞行模式」开关与钉钉打卡界面。开启后通知栏会出现一个「Dump」按钮，可在任意界面抓取节点树到本应用日志，便于调试。</string>
+    <string name="notif_status_title">钉钉打卡助手</string>
+    <string name="notif_status_text">无障碍服务运行中。下拉点 Dump 抓节点树。</string>
+    <string name="notif_action_dump">Dump 节点树</string>
+
+    <!-- Logs activity -->
+    <string name="logs_title">日志</string>
+    <string name="logs_meta">%1$d 个文件 · %2$.1f KB</string>
+    <string name="logs_empty">尚无日志</string>
+    <string name="logs_action_refresh">刷新</string>
+    <string name="logs_action_copy">复制全部</string>
+    <string name="logs_action_share">分享日志文件</string>
+    <string name="logs_action_clear">清空全部</string>
+    <string name="logs_copied">已复制到剪贴板</string>
+    <string name="logs_share_failed">分享失败</string>
+    <string name="logs_clear_confirm_title">清空所有日志？</string>
+    <string name="logs_clear_confirm_msg">将删除日志目录下全部文件，操作不可撤销。</string>
+
+    <!-- DryRun activity -->
+    <string name="dryrun_title">调试工具 (DryRun)</string>
+    <string name="dryrun_status_title">运行状态</string>
+    <string name="dryrun_accessibility_on">无障碍服务：✓ 已开启</string>
+    <string name="dryrun_accessibility_off">无障碍服务：✗ 未开启</string>
+    <string name="dryrun_notif_on">通知权限：✓ 已开启（通知栏会有 Dump 按钮）</string>
+    <string name="dryrun_notif_off">通知权限：✗ 未授权（无 Dump 按钮，可用下面的「立即 dump」）</string>
+    <string name="dryrun_request_notification">授予通知权限</string>
+    <string name="dryrun_actions_title">界面跳转</string>
+    <string name="dryrun_actions_help">点下面任一按钮跳到对应界面，下拉通知栏点「Dump 节点树」即可把当前界面的控件层级写入日志。</string>
+    <string name="dryrun_open_dingtalk">打开钉钉</string>
+    <string name="dryrun_open_airplane">打开飞行模式设置</string>
+    <string name="dryrun_open_wifi">打开 WiFi 设置</string>
+    <string name="dryrun_dump_now">立即 Dump 当前界面（含本页）</string>
+    <string name="dryrun_dump_hint">这个按钮会 dump「当前 Activity」的根节点。要抓其它应用的界面，请用通知栏 Dump。</string>
+    <string name="dryrun_dump_done">已 dump，去日志页查看</string>
+    <string name="dryrun_dump_service_off">无障碍服务未开启，无法 dump</string>
+    <string name="dryrun_open_logs">查看日志 →</string>
+    <string name="dryrun_dingtalk_not_installed">未检测到钉钉，请先安装</string>
+
+    <!-- DryRun: phase 4/5 -->
+    <string name="dryrun_phase4_title">Wi-Fi + 钉钉启动（Phase 4）</string>
+    <string name="dryrun_phase4_help">先关飞行模式 → 这里点「等 Wi-Fi」会一直等到目标 SSID 出现；然后「启动钉钉」会拉起钉钉并等到它进入前台。</string>
+    <string name="dryrun_await_wifi">等 Wi-Fi 连上配置 SSID</string>
+    <string name="dryrun_launch_ding">启动钉钉并等候前台</string>
+    <string name="dryrun_no_wifi_configured">尚未配置 WiFi SSID，请先到 Setup 填写</string>
+    <string name="dryrun_wifi_waiting">等 Wi-Fi … 目标 SSID = %1$s</string>
+    <string name="dryrun_wifi_ok">[%1$s] Wi-Fi 已连上 %2$s</string>
+    <string name="dryrun_wifi_fail">[%1$s] Wi-Fi 失败：%2$s</string>
+    <string name="dryrun_ding_launching">启动钉钉中 …</string>
+    <string name="dryrun_ding_ok">[%1$s] 钉钉已在前台</string>
+    <string name="dryrun_ding_fail">[%1$s] 钉钉启动失败：%2$s</string>
+
+    <string name="dryrun_phase5_title">完整试打一次（Phase 5）</string>
+    <string name="dryrun_full_punch">立即试打（不恢复飞行模式）</string>
+    <string name="dryrun_full_needs_config">请先到 Setup 填好账号、WiFi、密码</string>
+    <string name="dryrun_full_started">已启动前台服务，请勿离开屏幕。完成后退至日志页查看流程。</string>
+    <string name="dryrun_full_check_logs">流程已交给前台服务，请去「查看日志」观察 → 状态机切换</string>
+
+    <!-- DryRun: airplane controller -->
+    <string name="dryrun_airplane_title">飞行模式自动切换（Phase 3）</string>
+    <string name="dryrun_airplane_help">点下面任一按钮，App 会自动跳到设置页 → 找到飞行模式 Switch → 翻转到目标状态 → 校验后退出。会在日志里看到完整流程。</string>
+    <string name="dryrun_airplane_off">关飞行模式</string>
+    <string name="dryrun_airplane_on">开飞行模式</string>
+    <string name="dryrun_airplane_running">执行中：%1$s …</string>
+    <string name="dryrun_airplane_ok">[%1$s] %2$s 成功</string>
+    <string name="dryrun_airplane_fail">[%1$s] 失败：%2$s</string>
+
+    <!-- Permissions list (Phase 8) -->
+    <string name="setup_permissions_help">每一项点「打开设置」跳转，操作完后勾「我已开启」。9 项全开后回向导点「完成」。</string>
+    <string name="setup_permissions_rom">设备：%1$s</string>
+    <string name="perm_open_setting">打开设置</string>
+    <string name="perm_done_check">我已开启</string>
+
+    <!-- Webhook test -->
+    <string name="webhook_test_send">发送测试消息</string>
+    <string name="webhook_test_running">发送中 …</string>
+    <string name="webhook_test_ok">✓ 已送达，请到群里确认</string>
+    <string name="webhook_test_fail">✗ 发送失败，检查 URL/Secret/网络</string>
+
+    <!-- Foreground service notifications -->
+    <string name="notif_punch_title">钉钉打卡进行中</string>
+    <string name="notif_punch_starting">准备开始 …</string>
+
+    <!-- Main: schedule + recent log -->
+    <string name="main_next_run">下次：%1$s %2$s %3$s</string>
+    <string name="main_no_next_run">下次：暂未排期（请检查节假日设置）</string>
+    <string name="main_no_punch_yet">最近打卡：暂无记录</string>
+    <string name="main_recent_log">最近：%1$s %2$s %3$s（%4$s）</string>
 </resources>

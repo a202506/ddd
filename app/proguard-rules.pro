@@ -15,6 +15,7 @@
 
 # Room
 -keep class androidx.room.** { *; }
+-keep class com.buzzingmountain.dingclock.db.** { *; }
 
 # OkHttp
 -dontwarn okhttp3.**
