@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:pooya.blog)",
+      "WebFetch(domain:codewithmukesh.com)"
+    ]
+  }
+}

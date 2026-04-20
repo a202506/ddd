@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">钉钉打卡助手</string>
+    <string name="app_name_en" translatable="false">DingClock</string>
+    <string name="phase0_hello">脚手架就绪。下次构建将逐步加入配置、状态机和调度。</string>
+</resources>

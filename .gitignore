@@ -1,0 +1,27 @@
+*.iml
+.gradle/
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+local.properties
+*.jks
+*.keystore
+!keystore/README.md
+/app/release
+/app/build
+*.apk
+*.aab
+
+# IDE
+.vscode/
+*.log
+
+# OS
+Thumbs.db
+
+# Keep wrapper
+!gradle/wrapper/gradle-wrapper.jar
