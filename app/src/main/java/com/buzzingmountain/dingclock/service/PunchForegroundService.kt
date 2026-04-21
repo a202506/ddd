@@ -51,8 +51,7 @@ class PunchForegroundService : Service() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val typeName = intent?.getStringExtra(EXTRA_TYPE) ?: PunchType.DRY_RUN.name
         val type = runCatching { PunchType.valueOf(typeName) }.getOrDefault(PunchType.DRY_RUN)
-        val skipRestore = intent?.getBooleanExtra(EXTRA_SKIP_RESTORE, type == PunchType.DRY_RUN) ?: true
-        Timber.i("Start punch flow type=%s skipRestore=%s", type, skipRestore)
+        Timber.i("Start punch flow type=%s", type)
 
         startForegroundCompat(buildNotification(getString(R.string.notif_punch_starting)))
         acquireWakeLock()
@@ -81,7 +80,6 @@ class PunchForegroundService : Service() {
                 type = type,
                 config = cfg,
                 passwordProvider = passwordProvider,
-                skipAirplaneRestore = skipRestore,
             )
             val machine = PunchStateMachine(applicationContext, context, notifier = notifier)
 
@@ -181,12 +179,10 @@ class PunchForegroundService : Service() {
     companion object {
         private const val NOTIF_ID = 2001
         private const val EXTRA_TYPE = "type"
-        private const val EXTRA_SKIP_RESTORE = "skip_restore"
 
-        fun startWith(context: Context, type: PunchType, skipRestore: Boolean = false) {
+        fun startWith(context: Context, type: PunchType) {
             val intent = Intent(context, PunchForegroundService::class.java).apply {
                 putExtra(EXTRA_TYPE, type.name)
-                putExtra(EXTRA_SKIP_RESTORE, skipRestore)
             }
             ContextCompat.startForegroundService(context, intent)
         }

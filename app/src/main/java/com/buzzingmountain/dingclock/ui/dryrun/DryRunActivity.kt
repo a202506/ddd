@@ -139,9 +139,9 @@ class DryRunActivity : AppCompatActivity() {
         }
         binding.punchStateText.text = getString(R.string.dryrun_full_started)
         binding.fullPunchBtn.isEnabled = false
-        Timber.i("DryRun: full punch (skipAirplaneRestore=true)")
+        Timber.i("DryRun: full punch")
         // Service will run independently; we just kick it off and let the user watch logs.
-        PunchForegroundService.startWith(this, type = PunchType.DRY_RUN, skipRestore = true)
+        PunchForegroundService.startWith(this, type = PunchType.DRY_RUN)
         // Re-enable button after a short cooldown — user can re-run if needed.
         binding.fullPunchBtn.postDelayed({
             binding.fullPunchBtn.isEnabled = true

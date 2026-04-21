@@ -20,6 +20,20 @@ object DingActions {
         return NodeFinder.clickEffectively(node)
     }
 
+    /**
+     * Like [clickByText] but only matches on exact text/contentDescription equality. Use when
+     * a containing substring would cause a false positive (e.g. matching "密码登录" when looking
+     * for "登录").
+     */
+    suspend fun clickByTextExact(vararg labels: String, timeoutMs: Long = 8_000, tag: String = "click-exact"): Boolean {
+        val node = AccessibilityBridge.awaitNode(timeoutMs = timeoutMs, tag = tag) { n ->
+            val t = n.text?.toString().orEmpty()
+            val d = n.contentDescription?.toString().orEmpty()
+            labels.any { lbl -> t == lbl || d == lbl }
+        } ?: return false
+        return NodeFinder.clickEffectively(node)
+    }
+
     /** Find an EditText whose hint or text contains [hint], then ACTION_SET_TEXT it. */
     suspend fun setEditText(hint: String, value: String, timeoutMs: Long = 6_000): Boolean {
         val edit = AccessibilityBridge.awaitNode(

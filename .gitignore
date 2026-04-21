@@ -25,3 +25,4 @@ Thumbs.db
 
 # Keep wrapper
 !gradle/wrapper/gradle-wrapper.jar
+*.jpg

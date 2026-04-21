@@ -13,7 +13,6 @@ sealed class DingScreen {
     data object Attendance : DingScreen()
     data object PunchSuccess : DingScreen()
     data object Login : DingScreen()
-    data object SmsVerify : DingScreen()
     data object Splash : DingScreen()
     data object Unknown : DingScreen()
     data object NotDingTalk : DingScreen()
@@ -29,11 +28,10 @@ sealed class DingScreen {
 
             val texts = mutableListOf<String>()
             collectTexts(root, texts)
-            val joined = texts.joinToString("\u0001")
+            val joined = texts.joinToString("")
 
             return when {
                 hasAny(joined, "打卡成功", "已打卡", "上班打卡成功", "下班打卡成功", "外勤打卡成功") -> PunchSuccess
-                hasAny(joined, "请输入验证码", "短信验证码", "获取验证码", "下一步\u0001验证码", "需要验证") -> SmsVerify
                 hasAny(joined, "极速打卡", "上班打卡", "下班打卡", "考勤打卡", "外勤打卡") -> Attendance
                 isLoginScreen(joined) -> Login
                 hasAny(joined, "工作", "消息", "通讯录", "我的") -> Home
@@ -43,10 +41,15 @@ sealed class DingScreen {
         }
 
         private fun isLoginScreen(joined: String): Boolean {
-            // Login pages mention either "密码登录" tab, or both "登录" and a phone/password field hint.
-            if (hasAny(joined, "密码登录", "账号密码登录", "短信验证码登录")) return true
+            // Kicked-out flow anchors, any of:
+            //   S0 "欢迎使用钉钉" — logged-out entry with remembered phone
+            //   S1 "同意并登录"   — consent bottom sheet
+            //   S2 "密码登录"     — password-login entry button
+            //   S3 "请输入密码"   — password input page
+            if (hasAny(joined, "欢迎使用钉钉", "同意并登录", "密码登录", "请输入密码")) return true
+            // Fallback: generic login layout mentioning both a submit verb and an account field.
             val mentionsLogin = hasAny(joined, "登录", "Sign in")
-            val mentionsAccount = hasAny(joined, "请输入手机号", "请输入密码", "手机号", "工作号")
+            val mentionsAccount = hasAny(joined, "请输入手机号", "手机号", "工作号")
             return mentionsLogin && mentionsAccount
         }
 

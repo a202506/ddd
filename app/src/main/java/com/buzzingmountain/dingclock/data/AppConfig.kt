@@ -23,9 +23,10 @@ data class AppConfig(
     val enabled: Boolean = true,
 ) {
     fun isComplete(): Boolean =
-        phoneNumber.isNotBlank() &&
-            passwordCipher.isNotBlank() &&
-            wifiSsid.isNotBlank() &&
+        // Password is the only hard requirement — DingTalk remembers the phone number, and
+        // we no longer toggle airplane / scan for SSID (device stays on Wi-Fi; hotspot is
+        // flipped externally on another phone).
+        passwordCipher.isNotBlank() &&
             morningPunchAt.isNotBlank() &&
             eveningPunchAt.isNotBlank()
 

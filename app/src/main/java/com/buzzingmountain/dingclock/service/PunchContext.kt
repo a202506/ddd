@@ -9,6 +9,4 @@ data class PunchContext(
     val config: AppConfig,
     /** Provider executed at the moment we need to type the password into DingTalk. */
     val passwordProvider: () -> String?,
-    /** True for DryRun: skip the post-punch airplane-mode toggle so the user can keep iterating. */
-    val skipAirplaneRestore: Boolean = false,
 )
