@@ -16,7 +16,15 @@
       "Bash(sort -u grep -roE 'R\\\\.string\\\\.[a-zA-Z_][a-zA-Z0-9_]*' /Users/ying/ddd/app/src/main/java)",
       "Bash(sort -u echo \"USED but NOT DEFINED \\(real bugs\\):\" comm -23 /tmp/used_strings_uniq.txt /tmp/defined_strings.txt)",
       "Bash(grep -v '^@string/cancel$')",
-      "Bash(sort -u echo \"Kotlin binding.* that has no @+id in any layout:\" comm -23 /tmp/kotlin_binding_ids.txt /tmp/layout_ids.txt)"
+      "Bash(sort -u echo \"Kotlin binding.* that has no @+id in any layout:\" comm -23 /tmp/kotlin_binding_ids.txt /tmp/layout_ids.txt)",
+      "Bash(gradle --version)",
+      "Bash(java -version)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(curl -sL \"https://repo1.maven.org/maven2/com/jakewharton/timber/timber/5.0.1/timber-5.0.1-sources.jar\" -o /tmp/timber-src.jar)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Bash(unzip -o timber-src.jar -d timber-src)"
     ],
     "additionalDirectories": [
       "/Users/ying/ddd"

@@ -32,7 +32,7 @@ class FileLogTree(
         }
     }
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+    public override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority < Log.DEBUG) return
         synchronized(writeLock) {
             runCatching {
