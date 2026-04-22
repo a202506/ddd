@@ -13,9 +13,7 @@
     <string name="main_edit_setup">编辑配置</string>
     <string name="main_decrypt_check">验证密码可解密</string>
     <string name="no_colleague_name">（未填写姓名）</string>
-    <string name="label_phone">手机号：%1$s</string>
     <string name="label_schedule">上班 %1$s · 下班 %2$s （±%3$d 秒抖动）</string>
-    <string name="label_wifi">WiFi：%1$s</string>
     <string name="label_holiday_weekends">节假日：默认双休</string>
     <string name="label_holiday_custom">节假日：自定义清单（%1$d 天）</string>
     <string name="label_password_saved">密码：已加密保存</string>
@@ -31,29 +29,22 @@
     <string name="setup_next">下一步</string>
     <string name="setup_finish">完成</string>
     <string name="setup_saved">配置已保存</string>
-    <string name="setup_err_phone_required">请填写手机号</string>
     <string name="setup_err_password_required">请填写密码</string>
-    <string name="setup_err_ssid_required">请填写 WiFi SSID</string>
 
     <!-- Account -->
     <string name="setup_account_hint">本机对应同事的钉钉账号</string>
     <string name="setup_account_security_note">密码使用 Android Keystore（AES-256-GCM）加密后再写入加密的 SharedPreferences，本机重启后仍可解密。卸载本应用即丢失。</string>
     <string name="field_colleague">同事姓名（仅本机显示）</string>
-    <string name="field_phone">钉钉手机号</string>
     <string name="field_password">钉钉密码</string>
     <string name="password_pending_save">将在完成时加密保存</string>
     <string name="password_already_saved">已加密保存（留空表示沿用旧密码）</string>
     <string name="password_not_set">尚未保存密码</string>
 
     <!-- Schedule -->
-    <string name="setup_schedule_hint">打卡时间与 WiFi 配置</string>
+    <string name="setup_schedule_hint">打卡时间与节假日</string>
     <string name="field_morning_time">上班打卡时间</string>
     <string name="field_evening_time">下班打卡时间</string>
     <string name="field_jitter">随机抖动（秒）</string>
-    <string name="field_wifi_ssid">现场 WiFi SSID</string>
-    <string name="fill_current_ssid">填入当前连接的 WiFi</string>
-    <string name="ssid_needs_location">读取当前 SSID 需要定位权限。请手动输入。</string>
-    <string name="ssid_unavailable">无法读取当前 SSID。请手动输入。</string>
     <string name="field_holiday_mode">节假日策略</string>
     <string name="holiday_use_custom_list">使用自定义节假日清单（默认仅双休）</string>
     <string name="field_custom_holidays">自定义节假日</string>
@@ -110,12 +101,11 @@
 
     <!-- DryRun: phase 4/5 -->
     <string name="dryrun_phase4_title">Wi-Fi + 钉钉启动（Phase 4）</string>
-    <string name="dryrun_phase4_help">先关飞行模式 → 这里点「等 Wi-Fi」会一直等到目标 SSID 出现；然后「启动钉钉」会拉起钉钉并等到它进入前台。</string>
-    <string name="dryrun_await_wifi">等 Wi-Fi 连上配置 SSID</string>
+    <string name="dryrun_phase4_help">点「等 Wi-Fi」会等到任意有互联网的 Wi-Fi 连上为止；然后「启动钉钉」会拉起钉钉并等到它进入前台。</string>
+    <string name="dryrun_await_wifi">等 Wi-Fi 连上</string>
     <string name="dryrun_launch_ding">启动钉钉并等候前台</string>
-    <string name="dryrun_no_wifi_configured">尚未配置 WiFi SSID，请先到 Setup 填写</string>
-    <string name="dryrun_wifi_waiting">等 Wi-Fi … 目标 SSID = %1$s</string>
-    <string name="dryrun_wifi_ok">[%1$s] Wi-Fi 已连上 %2$s</string>
+    <string name="dryrun_wifi_waiting_any">等 Wi-Fi … 连上任意有互联网的网络即视为成功</string>
+    <string name="dryrun_wifi_ok_any">[%1$s] Wi-Fi 已连上</string>
     <string name="dryrun_wifi_fail">[%1$s] Wi-Fi 失败：%2$s</string>
     <string name="dryrun_ding_launching">启动钉钉中 …</string>
     <string name="dryrun_ding_ok">[%1$s] 钉钉已在前台</string>
@@ -123,7 +113,7 @@
 
     <string name="dryrun_phase5_title">完整试打一次（Phase 5）</string>
     <string name="dryrun_full_punch">立即试打（不恢复飞行模式）</string>
-    <string name="dryrun_full_needs_config">请先到 Setup 填好账号、WiFi、密码</string>
+    <string name="dryrun_full_needs_config">请先到 Setup 填好同事姓名与密码</string>
     <string name="dryrun_full_started">已启动前台服务，请勿离开屏幕。完成后退至日志页查看流程。</string>
     <string name="dryrun_full_check_logs">流程已交给前台服务，请去「查看日志」观察 → 状态机切换</string>
 

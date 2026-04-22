@@ -99,18 +99,13 @@ class DryRunActivity : AppCompatActivity() {
     }
 
     private fun runAwaitWifi() {
-        val cfg = ConfigRepository(this).load()
-        if (cfg == null || cfg.wifiSsid.isBlank()) {
-            Toast.makeText(this, R.string.dryrun_no_wifi_configured, Toast.LENGTH_LONG).show()
-            return
-        }
-        binding.phase4ResultText.text = getString(R.string.dryrun_wifi_waiting, cfg.wifiSsid)
+        binding.phase4ResultText.text = getString(R.string.dryrun_wifi_waiting_any)
         binding.awaitWifiBtn.isEnabled = false
         lifecycleScope.launch {
-            val r = WifiWatcher(applicationContext).awaitConnected(cfg.wifiSsid, timeoutMs = 60_000)
+            val r = WifiWatcher(applicationContext).awaitConnected("", timeoutMs = 60_000)
             val timeStr = timeFmt.format(Date())
             binding.phase4ResultText.text = when (r) {
-                StepResult.Success -> getString(R.string.dryrun_wifi_ok, timeStr, cfg.wifiSsid)
+                StepResult.Success -> getString(R.string.dryrun_wifi_ok_any, timeStr)
                 is StepResult.Failure -> getString(R.string.dryrun_wifi_fail, timeStr, r.reason)
             }
             binding.awaitWifiBtn.isEnabled = true

@@ -244,16 +244,13 @@ class PunchStateMachine(
         val sent = n.send(
             title = "钉钉打卡失败",
             markdown = "### 钉钉打卡失败\n" +
-                "- 设备：${maskPhone(context.config.phoneNumber)}\n" +
+                "- 同事：${context.config.colleagueName.ifBlank { "(未设置)" }}\n" +
                 "- 类型：${context.type.zh}\n" +
                 "- 状态：${state.value.title}\n" +
                 "- 原因：${failed.reason}\n",
         )
         Timber.i("notifier.send result=%s", sent)
     }
-
-    private fun maskPhone(p: String): String =
-        if (p.length >= 7) p.take(3) + "****" + p.takeLast(4) else "****"
 
     data class TerminalResult(
         val state: State,

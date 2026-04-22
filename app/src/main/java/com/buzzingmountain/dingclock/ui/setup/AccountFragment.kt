@@ -39,9 +39,6 @@ class AccountFragment : Fragment() {
                     if (binding.colleagueEdit.text?.toString().orEmpty() != cfg.colleagueName) {
                         binding.colleagueEdit.setText(cfg.colleagueName)
                     }
-                    if (binding.phoneEdit.text?.toString().orEmpty() != cfg.phoneNumber) {
-                        binding.phoneEdit.setText(cfg.phoneNumber)
-                    }
                     binding.passwordStatus.text = when {
                         vm.plaintextPassword.isNotEmpty() -> getString(R.string.password_pending_save)
                         cfg.passwordCipher.isNotEmpty() -> getString(R.string.password_already_saved)
@@ -53,9 +50,6 @@ class AccountFragment : Fragment() {
 
         binding.colleagueEdit.addTextChangedListener(textWatcher { v ->
             vm.update { it.copy(colleagueName = v) }
-        })
-        binding.phoneEdit.addTextChangedListener(textWatcher { v ->
-            vm.update { it.copy(phoneNumber = v.trim()) }
         })
         binding.passwordEdit.addTextChangedListener(textWatcher { v ->
             vm.setPassword(v)

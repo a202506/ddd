@@ -32,21 +32,6 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneLayout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/field_phone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/phoneEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="phone"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"

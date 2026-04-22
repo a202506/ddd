@@ -66,14 +66,6 @@
                         android:textAppearance="?attr/textAppearanceTitleLarge"
                         tools:text="同事 张三"/>
 
-                    <TextView
-                        android:id="@+id/phoneText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="138****5678"/>
-
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
@@ -86,14 +78,6 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         tools:text="上班 09:00 · 下班 18:00 (±90s)"/>
-
-                    <TextView
-                        android:id="@+id/wifiText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="WiFi: OfficeWiFi"/>
 
                     <TextView
                         android:id="@+id/holidayText"

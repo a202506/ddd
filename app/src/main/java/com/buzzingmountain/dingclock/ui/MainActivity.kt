@@ -79,14 +79,12 @@ class MainActivity : AppCompatActivity() {
         binding.setupButton.text = getString(R.string.main_edit_setup)
 
         binding.colleagueText.text = cfg.colleagueName.ifBlank { getString(R.string.no_colleague_name) }
-        binding.phoneText.text = getString(R.string.label_phone, cfg.maskedPhone())
         binding.scheduleText.text = getString(
             R.string.label_schedule,
             cfg.morningPunchAt,
             cfg.eveningPunchAt,
             cfg.randomJitterSeconds,
         )
-        binding.wifiText.text = getString(R.string.label_wifi, cfg.wifiSsid)
         binding.holidayText.text = when (cfg.holidayMode) {
             HolidayMode.WEEKENDS_ONLY -> getString(R.string.label_holiday_weekends)
             HolidayMode.CUSTOM_LIST -> getString(R.string.label_holiday_custom, cfg.customHolidays.size)

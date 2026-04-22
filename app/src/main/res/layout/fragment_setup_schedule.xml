@@ -60,34 +60,6 @@
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="@string/field_wifi_ssid">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ssidEdit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:inputType="text"/>
-            </LinearLayout>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/fillCurrentSsidBtn"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/fill_current_ssid"/>
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

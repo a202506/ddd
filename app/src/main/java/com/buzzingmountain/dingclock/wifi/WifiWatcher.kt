@@ -35,9 +35,10 @@ class WifiWatcher(private val context: Context) {
             return@suspendCancellableCoroutine
         }
         val expected = targetSsid.trim().trim('"')
+        val acceptAny = expected.isEmpty()
 
         // Already on the right Wi-Fi? Resolve immediately.
-        currentMatchedSsid(cm, expected)?.let { ssid ->
+        currentMatchedSsid(cm, expected, acceptAny)?.let { ssid ->
             Timber.i("WifiWatcher: already on %s", ssid)
             cont.resume(StepResult.Success)
             return@suspendCancellableCoroutine
@@ -61,6 +62,10 @@ class WifiWatcher(private val context: Context) {
                 if (!caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) return
                 val ssid = readSsid(caps)
                 when {
+                    acceptAny -> {
+                        Timber.i("WifiWatcher: any-Wi-Fi mode, on %s", ssid ?: "(ssid unreadable)")
+                        settle(StepResult.Success)
+                    }
                     ssid == null -> {
                         Timber.w("WifiWatcher: SSID unreadable (no location perm?), accepting any Wi-Fi with internet")
                         settle(StepResult.Success)
@@ -99,7 +104,12 @@ class WifiWatcher(private val context: Context) {
             settled = true
             runCatching { cm.unregisterNetworkCallback(callback) }
             if (cont.isActive) {
-                cont.resume(StepResult.Failure("等 Wi-Fi 超时（${timeoutMs / 1000}s，目标 SSID=$expected）"))
+                val msg = if (acceptAny) {
+                    "等 Wi-Fi 超时（${timeoutMs / 1000}s）"
+                } else {
+                    "等 Wi-Fi 超时（${timeoutMs / 1000}s，目标 SSID=$expected）"
+                }
+                cont.resume(StepResult.Failure(msg))
             }
         }, timeoutMs)
 
@@ -109,13 +119,18 @@ class WifiWatcher(private val context: Context) {
         }
     }
 
-    private fun currentMatchedSsid(cm: ConnectivityManager, expected: String): String? {
+    private fun currentMatchedSsid(cm: ConnectivityManager, expected: String, acceptAny: Boolean): String? {
         val net = cm.activeNetwork ?: return null
         val caps = cm.getNetworkCapabilities(net) ?: return null
         if (!caps.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) return null
         if (!caps.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)) return null
-        val ssid = readSsid(caps) ?: return null
-        return if (ssid.equals(expected, ignoreCase = true)) ssid else null
+        val ssid = readSsid(caps)
+        return when {
+            acceptAny -> ssid ?: "(any)"
+            ssid == null -> null
+            ssid.equals(expected, ignoreCase = true) -> ssid
+            else -> null
+        }
     }
 
     private fun readSsid(caps: NetworkCapabilities): String? {

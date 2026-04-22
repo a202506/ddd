@@ -66,16 +66,6 @@ class SetupActivity : AppCompatActivity() {
             binding.pager.currentItem = 0
             return
         }
-        if (cfg.phoneNumber.isBlank()) {
-            Toast.makeText(this, R.string.setup_err_phone_required, Toast.LENGTH_LONG).show()
-            binding.pager.currentItem = 0
-            return
-        }
-        if (cfg.wifiSsid.isBlank()) {
-            Toast.makeText(this, R.string.setup_err_ssid_required, Toast.LENGTH_LONG).show()
-            binding.pager.currentItem = 1
-            return
-        }
         vm.persist()
         // Re-arm AlarmManager + WorkManager based on the new schedule.
         runCatching { PunchScheduler(this).rescheduleAll() }

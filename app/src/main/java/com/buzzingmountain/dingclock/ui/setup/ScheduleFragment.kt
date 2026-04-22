@@ -1,17 +1,11 @@
 package com.buzzingmountain.dingclock.ui.setup
 
-import android.Manifest
-import android.content.Context
-import android.content.pm.PackageManager
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -53,7 +47,6 @@ class ScheduleFragment : Fragment() {
                     setIfDifferent(binding.eveningEdit, cfg.eveningPunchAt)
                     val jitterStr = cfg.randomJitterSeconds.toString()
                     setIfDifferent(binding.jitterEdit, jitterStr)
-                    setIfDifferent(binding.ssidEdit, cfg.wifiSsid)
                     val isCustom = cfg.holidayMode == HolidayMode.CUSTOM_LIST
                     if (binding.customHolidaySwitch.isChecked != isCustom) {
                         binding.customHolidaySwitch.isChecked = isCustom
@@ -72,11 +65,6 @@ class ScheduleFragment : Fragment() {
             val n = v.toIntOrNull()?.coerceIn(0, 600) ?: 0
             vm.update { it.copy(randomJitterSeconds = n) }
         })
-        binding.ssidEdit.addTextChangedListener(textWatcher { v ->
-            vm.update { it.copy(wifiSsid = v.trim()) }
-        })
-
-        binding.fillCurrentSsidBtn.setOnClickListener { fillCurrentSsid() }
 
         binding.customHolidaySwitch.setOnCheckedChangeListener { _, checked ->
             vm.update { it.copy(holidayMode = if (checked) HolidayMode.CUSTOM_LIST else HolidayMode.WEEKENDS_ONLY) }
@@ -109,24 +97,6 @@ class ScheduleFragment : Fragment() {
             else vm.update { it.copy(eveningPunchAt = time) }
         }
         picker.show(parentFragmentManager, "time_picker_${if (isMorning) "m" else "e"}")
-    }
-
-    private fun fillCurrentSsid() {
-        val ctx = context ?: return
-        if (ContextCompat.checkSelfPermission(ctx, Manifest.permission.ACCESS_FINE_LOCATION)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            Toast.makeText(ctx, R.string.ssid_needs_location, Toast.LENGTH_LONG).show()
-            return
-        }
-        val wm = ctx.applicationContext.getSystemService(Context.WIFI_SERVICE) as? WifiManager
-        @Suppress("DEPRECATION")
-        val ssid = wm?.connectionInfo?.ssid?.trim('"').orEmpty()
-        if (ssid.isBlank() || ssid == "<unknown ssid>") {
-            Toast.makeText(ctx, R.string.ssid_unavailable, Toast.LENGTH_LONG).show()
-            return
-        }
-        binding.ssidEdit.setText(ssid)
     }
 
     private fun parseHolidays(text: String): Set<String> {
