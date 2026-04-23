@@ -2,7 +2,7 @@
 
 Android auto-attendance app for DingTalk (钉钉极速打卡), built for vivo phones.
 
-Automates the daily flow: toggle airplane mode → wait WiFi → open DingTalk → punch → re-enable airplane mode. Driven by AccessibilityService, scheduled by AlarmManager. No root / ADB required.
+Automates the daily flow: probe network → open DingTalk → auto-login if kicked out → tap 极速打卡 → verify success. Driven by AccessibilityService, scheduled by AlarmManager. No root / ADB required.
 
 See the approved plan at `/Users/ying/.claude/plans/12-12-vivo-app-accessibilityservice-git-buzzing-mountain.md`.
 

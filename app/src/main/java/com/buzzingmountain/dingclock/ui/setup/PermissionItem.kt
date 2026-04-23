@@ -24,7 +24,7 @@ data class PermissionItem(
             PermissionItem(
                 key = "accessibility",
                 title = "无障碍服务",
-                description = "用于点系统设置的飞行模式 Switch、操作钉钉打卡。开启后通知栏会出现 Dump 按钮。",
+                description = "用于识别钉钉界面并自动点击打卡按钮。开启后通知栏会出现 Dump 按钮。",
                 intentFor = { Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS) },
             ),
             PermissionItem(

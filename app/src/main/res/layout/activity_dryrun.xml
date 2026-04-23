@@ -106,72 +106,12 @@
                 android:text="@string/dryrun_open_dingtalk"/>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/openAirplaneSettingsBtn"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/dryrun_open_airplane"/>
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/openWifiSettingsBtn"
                 style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/dryrun_open_wifi"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="20dp"
-                android:background="?attr/colorOutlineVariant"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/dryrun_airplane_title"
-                android:textAppearance="?attr/textAppearanceTitleMedium"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/dryrun_airplane_help"
-                android:textAppearance="?attr/textAppearanceBodySmall"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/airplaneOffBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dryrun_airplane_off"/>
-
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"/>
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/airplaneOnBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/dryrun_airplane_on"/>
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/airplaneResultText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?android:attr/textColorSecondary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -214,7 +154,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?android:attr/textColorSecondary"/>
+                android:textColor="@color/text_secondary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -241,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="?android:attr/textColorSecondary"/>
+                android:textColor="@color/text_secondary"/>
 
             <View
                 android:layout_width="match_parent"

@@ -9,11 +9,7 @@ import java.time.LocalDate
 
 class HolidayCheckerTest {
 
-    private val baseCfg = AppConfig(
-        phoneNumber = "13812345678",
-        passwordCipher = "x",
-        wifiSsid = "Office",
-    )
+    private val baseCfg = AppConfig(passwordCipher = "x")
 
     @Test
     fun `weekends_only treats Sat and Sun as off`() {

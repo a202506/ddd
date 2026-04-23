@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textAppearance="?attr/textAppearanceBodySmall"
-            android:textColor="?android:attr/textColorSecondary"/>
+            android:textColor="@color/text_secondary"/>
 
         <LinearLayout
             android:layout_width="match_parent"

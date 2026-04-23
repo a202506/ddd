@@ -21,34 +21,22 @@ class AppConfigTest {
     }
 
     @Test
-    fun `full config is complete`() {
-        val cfg = AppConfig(
-            phoneNumber = "13812345678",
-            passwordCipher = "ZmFrZWNpcGhlcg==",
-            wifiSsid = "OfficeWiFi",
-        )
+    fun `config with password is complete`() {
+        val cfg = AppConfig(passwordCipher = "ZmFrZWNpcGhlcg==")
         assertTrue(cfg.isComplete())
     }
 
     @Test
-    fun `masked phone keeps prefix and suffix`() {
-        val cfg = AppConfig(phoneNumber = "13812345678")
-        assertEquals("138****5678", cfg.maskedPhone())
-    }
-
-    @Test
-    fun `masked phone handles short numbers`() {
-        assertEquals("****", AppConfig(phoneNumber = "1234").maskedPhone())
-        assertEquals("(未配置)", AppConfig(phoneNumber = "").maskedPhone())
+    fun `config with blank punch times is incomplete`() {
+        val cfg = AppConfig(passwordCipher = "ZmFrZWNpcGhlcg==", morningPunchAt = "")
+        assertFalse(cfg.isComplete())
     }
 
     @Test
     fun `moshi roundtrip preserves all fields`() {
         val original = AppConfig(
-            phoneNumber = "13912345678",
             colleagueName = "张三",
             passwordCipher = "Y2lwaGVy",
-            wifiSsid = "OfficeWiFi",
             morningPunchAt = "08:30",
             eveningPunchAt = "18:30",
             randomJitterSeconds = 60,

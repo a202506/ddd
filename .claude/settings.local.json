@@ -24,7 +24,15 @@
       "Bash(curl -sL \"https://repo1.maven.org/maven2/com/jakewharton/timber/timber/5.0.1/timber-5.0.1-sources.jar\" -o /tmp/timber-src.jar)",
       "Read(//tmp/**)",
       "Read(//private/tmp/**)",
-      "Bash(unzip -o timber-src.jar -d timber-src)"
+      "Bash(unzip -o timber-src.jar -d timber-src)",
+      "Bash(rtk gh *)",
+      "Bash(gh run *)",
+      "Bash(adb devices *)",
+      "Bash(mkdir -p /tmp/ddd-apk)",
+      "Bash(rtk ls *)",
+      "Read(//Users/**)",
+      "Bash(rtk find *)",
+      "Bash(adb install *)"
     ],
     "additionalDirectories": [
       "/Users/ying/ddd"

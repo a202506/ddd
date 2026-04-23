@@ -17,11 +17,10 @@ import com.buzzingmountain.dingclock.service.NotificationHelper
 import timber.log.Timber
 
 /**
- * Phase 2: skeleton service. It logs every TYPE_WINDOW_STATE_CHANGED so we can see which
+ * Long-running AccessibilityService: logs every TYPE_WINDOW_STATE_CHANGED so we can see which
  * activity is in front, and exposes a [ACTION_DUMP_ROOT] broadcast (wired to a notification
- * action) that dumps the current window's accessibility node tree into the log file.
- *
- * Phases 3+ will add real behaviors (toggle airplane mode, drive DingTalk).
+ * action) that dumps the current window's accessibility node tree into the log file. The
+ * punch state machine reads from [AccessibilityBridge] to classify and drive DingTalk.
  */
 class DingAccessibilityService : AccessibilityService() {
 

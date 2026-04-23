@@ -3,11 +3,9 @@ package com.buzzingmountain.dingclock.data
 enum class HolidayMode { WEEKENDS_ONLY, CUSTOM_LIST }
 
 data class AppConfig(
-    val phoneNumber: String = "",
     val colleagueName: String = "",
     /** base64(iv || ciphertext) from [com.buzzingmountain.dingclock.crypto.KeystoreManager]. */
     val passwordCipher: String = "",
-    val wifiSsid: String = "",
     /** HH:mm, 24h. */
     val morningPunchAt: String = "09:00",
     /** HH:mm, 24h. */
@@ -24,15 +22,8 @@ data class AppConfig(
 ) {
     fun isComplete(): Boolean =
         // Password is the only hard requirement — DingTalk remembers the phone number, and
-        // we no longer toggle airplane / scan for SSID (device stays on Wi-Fi; hotspot is
-        // flipped externally on another phone).
+        // the device stays on Wi-Fi (hotspot is flipped externally on another phone).
         passwordCipher.isNotBlank() &&
             morningPunchAt.isNotBlank() &&
             eveningPunchAt.isNotBlank()
-
-    fun maskedPhone(): String = when {
-        phoneNumber.length >= 7 -> phoneNumber.take(3) + "****" + phoneNumber.takeLast(4)
-        phoneNumber.isNotEmpty() -> "****"
-        else -> "(未配置)"
-    }
 }

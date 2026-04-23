@@ -66,7 +66,7 @@ class NotifyFragment : Fragment() {
             val ok = DingRobotNotifier(cfg.webhookUrl, cfg.webhookSecret.takeIf { it.isNotBlank() })
                 .send(
                     title = "DingClock 测试消息",
-                    markdown = "### 测试消息\n来自 ${cfg.colleagueName.ifBlank { "钉钉打卡助手" }}（${cfg.maskedPhone()}）\n\n如果你看到这条，说明 webhook 配置正确。",
+                    markdown = "### 测试消息\n来自 ${cfg.colleagueName.ifBlank { "钉钉打卡助手" }}\n\n如果你看到这条，说明 webhook 配置正确。",
                 )
             binding.testWebhookResult.text = getString(
                 if (ok) R.string.webhook_test_ok else R.string.webhook_test_fail,

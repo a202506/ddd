@@ -12,6 +12,22 @@
     <string name="main_open_setup">开始配置</string>
     <string name="main_edit_setup">编辑配置</string>
     <string name="main_decrypt_check">验证密码可解密</string>
+    <string name="main_launch_and_check">启动钉钉并检查登录状态</string>
+    <string name="launch_check_running">手动流程已启动 …</string>
+    <string name="launch_check_acc_missing">✗ 无障碍服务未开启，请先到 DryRun 页或系统设置打开</string>
+    <string name="launch_check_probing">网络探测中 …（HEAD dingtalk.com）</string>
+    <string name="launch_check_probe_ok">✓ 网络可达</string>
+    <string name="launch_check_probe_fail">✗ %1$s</string>
+    <string name="launch_check_launching">启动钉钉并等待前台 …</string>
+    <string name="launch_check_foreground_ok">✓ 钉钉已进入前台</string>
+    <string name="launch_check_foreground_fail">✗ 启动失败：%1$s</string>
+    <string name="launch_check_classified">当前界面：%1$s</string>
+    <string name="launch_check_screen_login">需要登录（未登录或被踢出）</string>
+    <string name="launch_check_screen_home">首页 — 已登录</string>
+    <string name="launch_check_screen_attendance">考勤页 — 已登录</string>
+    <string name="launch_check_screen_punched">已有打卡成功页</string>
+    <string name="launch_check_screen_other">非钉钉界面</string>
+    <string name="launch_check_screen_unknown">暂无法识别，可用 DryRun 的「Dump 当前界面」进一步排查</string>
     <string name="no_colleague_name">（未填写姓名）</string>
     <string name="label_schedule">上班 %1$s · 下班 %2$s （±%3$d 秒抖动）</string>
     <string name="label_holiday_weekends">节假日：默认双休</string>
@@ -61,7 +77,7 @@
     <string name="field_webhook_url">Webhook URL</string>
     <string name="field_webhook_secret">加签 Secret</string>
     <!-- Accessibility service -->
-    <string name="accessibility_service_description">用于自动驱动「设置 → 飞行模式」开关与钉钉打卡界面。开启后通知栏会出现一个「Dump」按钮，可在任意界面抓取节点树到本应用日志，便于调试。</string>
+    <string name="accessibility_service_description">用于自动驱动钉钉打卡界面、识别登录状态与点击按钮。开启后通知栏会出现一个「Dump」按钮，可在任意界面抓取节点树到本应用日志，便于调试。</string>
     <string name="notif_status_title">钉钉打卡助手</string>
     <string name="notif_status_text">无障碍服务运行中。下拉点 Dump 抓节点树。</string>
     <string name="notif_action_dump">Dump 节点树</string>
@@ -90,7 +106,6 @@
     <string name="dryrun_actions_title">界面跳转</string>
     <string name="dryrun_actions_help">点下面任一按钮跳到对应界面，下拉通知栏点「Dump 节点树」即可把当前界面的控件层级写入日志。</string>
     <string name="dryrun_open_dingtalk">打开钉钉</string>
-    <string name="dryrun_open_airplane">打开飞行模式设置</string>
     <string name="dryrun_open_wifi">打开 WiFi 设置</string>
     <string name="dryrun_dump_now">立即 Dump 当前界面（含本页）</string>
     <string name="dryrun_dump_hint">这个按钮会 dump「当前 Activity」的根节点。要抓其它应用的界面，请用通知栏 Dump。</string>
@@ -112,19 +127,10 @@
     <string name="dryrun_ding_fail">[%1$s] 钉钉启动失败：%2$s</string>
 
     <string name="dryrun_phase5_title">完整试打一次（Phase 5）</string>
-    <string name="dryrun_full_punch">立即试打（不恢复飞行模式）</string>
+    <string name="dryrun_full_punch">立即试打</string>
     <string name="dryrun_full_needs_config">请先到 Setup 填好同事姓名与密码</string>
     <string name="dryrun_full_started">已启动前台服务，请勿离开屏幕。完成后退至日志页查看流程。</string>
     <string name="dryrun_full_check_logs">流程已交给前台服务，请去「查看日志」观察 → 状态机切换</string>
-
-    <!-- DryRun: airplane controller -->
-    <string name="dryrun_airplane_title">飞行模式自动切换（Phase 3）</string>
-    <string name="dryrun_airplane_help">点下面任一按钮，App 会自动跳到设置页 → 找到飞行模式 Switch → 翻转到目标状态 → 校验后退出。会在日志里看到完整流程。</string>
-    <string name="dryrun_airplane_off">关飞行模式</string>
-    <string name="dryrun_airplane_on">开飞行模式</string>
-    <string name="dryrun_airplane_running">执行中：%1$s …</string>
-    <string name="dryrun_airplane_ok">[%1$s] %2$s 成功</string>
-    <string name="dryrun_airplane_fail">[%1$s] 失败：%2$s</string>
 
     <!-- Permissions list (Phase 8) -->
     <string name="setup_permissions_help">每一项点「打开设置」跳转，操作完后勾「我已开启」。9 项全开后回向导点「完成」。</string>

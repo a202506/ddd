@@ -9,6 +9,7 @@ import com.buzzingmountain.dingclock.accessibility.screens.DingActions
 import com.buzzingmountain.dingclock.accessibility.screens.DingScreen
 import com.buzzingmountain.dingclock.core.StepResult
 import com.buzzingmountain.dingclock.dingtalk.DingTalkLauncher
+import com.buzzingmountain.dingclock.net.NetworkProbe
 import com.buzzingmountain.dingclock.notify.Notifier
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
@@ -21,8 +22,9 @@ import timber.log.Timber
  * Drives the full punch flow as a sequential state machine. Designed to be invoked from a
  * foreground service so that screen-off / Doze-mode wake-ups don't kill it.
  *
- * Assumes the device is already on the target Wi-Fi (hotspot is toggled externally on a
- * separate phone). Airplane-mode switching has been dropped.
+ * Assumes the device is already on Wi-Fi. `stepPreCheck` runs an HTTP reachability probe
+ * against dingtalk.com before launching DingTalk so a dead Wi-Fi (AP without DNS / captive
+ * portal / outage) fails fast instead of hanging inside the login flow.
  *
  * The terminal states are [State.Success] and [State.Failed]. Anything in between is an
  * intermediate step with its own timeout and recovery.
@@ -107,7 +109,10 @@ class PunchStateMachine(
 
     private suspend fun stepPreCheck(): State {
         if (!AccessibilityBridge.isReady()) return State.Failed("无障碍服务未启用")
-        return State.OpenDingTalk
+        return when (val r = NetworkProbe.check()) {
+            StepResult.Success -> State.OpenDingTalk
+            is StepResult.Failure -> State.Failed(r.reason)
+        }
     }
 
     private suspend fun stepOpenDingTalk(): State =

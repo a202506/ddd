@@ -16,12 +16,13 @@ import timber.log.Timber
 import kotlin.coroutines.resume
 
 /**
- * Waits for a Wi-Fi network with internet to come up after airplane mode is toggled off.
+ * Waits for a Wi-Fi network with internet capability to come up. Used in the DryRun page to
+ * verify link-layer state; the main punch flow relies on [com.buzzingmountain.dingclock.net.NetworkProbe]
+ * for end-to-end reachability instead.
  *
  * SSID matching is best-effort: reading the connected SSID requires location permission on
  * Android 8+, which we don't request automatically. If the SSID can't be read, we fall back
- * to "any Wi-Fi with internet" — the user's flow guarantees the phone auto-reconnects to
- * the right office network anyway.
+ * to "any Wi-Fi with internet".
  */
 class WifiWatcher(private val context: Context) {
 

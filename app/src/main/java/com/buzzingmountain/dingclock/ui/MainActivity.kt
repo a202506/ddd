@@ -7,20 +7,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.buzzingmountain.dingclock.BuildConfig
 import com.buzzingmountain.dingclock.R
+import com.buzzingmountain.dingclock.accessibility.AccessibilityBridge
 import com.buzzingmountain.dingclock.accessibility.AccessibilityHelper
 import com.buzzingmountain.dingclock.accessibility.DingAccessibilityService
+import com.buzzingmountain.dingclock.accessibility.screens.DingScreen
+import com.buzzingmountain.dingclock.core.StepResult
 import com.buzzingmountain.dingclock.data.AppConfig
 import com.buzzingmountain.dingclock.data.ConfigRepository
 import com.buzzingmountain.dingclock.data.HolidayMode
 import com.buzzingmountain.dingclock.data.PunchLogRepository
 import com.buzzingmountain.dingclock.data.PunchType
 import com.buzzingmountain.dingclock.databinding.ActivityMainBinding
+import com.buzzingmountain.dingclock.dingtalk.DingTalkLauncher
+import com.buzzingmountain.dingclock.net.NetworkProbe
 import com.buzzingmountain.dingclock.scheduler.HolidayChecker
 import com.buzzingmountain.dingclock.ui.dryrun.DryRunActivity
 import com.buzzingmountain.dingclock.ui.logs.LogsActivity
 import com.buzzingmountain.dingclock.ui.setup.SetupActivity
 import com.buzzingmountain.dingclock.util.TimeUtils
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -43,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SetupActivity::class.java))
         }
         binding.decryptCheckButton.setOnClickListener { runDecryptCheck() }
+        binding.launchAndCheckButton.setOnClickListener { runLaunchAndCheck() }
         binding.dryRunButton.setOnClickListener {
             startActivity(Intent(this, DryRunActivity::class.java))
         }
@@ -141,6 +151,72 @@ class MainActivity : AppCompatActivity() {
             return getString(R.string.main_next_run, rel, DateTimeFormatter.ofPattern("HH:mm").format(dt), type.zh)
         }
         return getString(R.string.main_no_next_run)
+    }
+
+    private fun runLaunchAndCheck() {
+        val btn = binding.launchAndCheckButton
+        val out = binding.launchAndCheckResult
+        btn.isEnabled = false
+        out.text = getString(R.string.launch_check_running)
+        lifecycleScope.launch {
+            val timeFmt = SimpleDateFormat("HH:mm:ss", Locale.US)
+            val lines = mutableListOf<String>()
+            fun append(line: String) {
+                lines += "[${timeFmt.format(Date())}] $line"
+                out.text = lines.joinToString("\n")
+            }
+
+            // 1. Accessibility readiness.
+            if (!AccessibilityBridge.isReady()) {
+                append(getString(R.string.launch_check_acc_missing))
+                btn.isEnabled = true
+                return@launch
+            }
+
+            // 2. Network probe.
+            append(getString(R.string.launch_check_probing))
+            when (val r = NetworkProbe.check()) {
+                StepResult.Success -> append(getString(R.string.launch_check_probe_ok))
+                is StepResult.Failure -> {
+                    append(getString(R.string.launch_check_probe_fail, r.reason))
+                    btn.isEnabled = true
+                    return@launch
+                }
+            }
+
+            // 3. Launch DingTalk and wait for foreground.
+            append(getString(R.string.launch_check_launching))
+            when (val r = DingTalkLauncher(applicationContext).launchAndAwaitForeground(timeoutMs = 15_000)) {
+                StepResult.Success -> append(getString(R.string.launch_check_foreground_ok))
+                is StepResult.Failure -> {
+                    append(getString(R.string.launch_check_foreground_fail, r.reason))
+                    btn.isEnabled = true
+                    return@launch
+                }
+            }
+
+            // 4. Classify current screen — login vs already logged in.
+            delay(2_000)
+            val screenLabel = classifyWithRetry()
+            append(getString(R.string.launch_check_classified, screenLabel))
+
+            btn.isEnabled = true
+        }
+    }
+
+    private suspend fun classifyWithRetry(): String {
+        repeat(6) {
+            when (val s = DingScreen.classify(AccessibilityBridge.currentRoot())) {
+                DingScreen.Login -> return getString(R.string.launch_check_screen_login)
+                DingScreen.Home -> return getString(R.string.launch_check_screen_home)
+                DingScreen.Attendance -> return getString(R.string.launch_check_screen_attendance)
+                DingScreen.PunchSuccess -> return getString(R.string.launch_check_screen_punched)
+                DingScreen.Splash, DingScreen.Unknown -> delay(1_000)
+                DingScreen.NotDingTalk -> return getString(R.string.launch_check_screen_other)
+                else -> return s::class.simpleName.orEmpty()
+            }
+        }
+        return getString(R.string.launch_check_screen_unknown)
     }
 
     private fun runDecryptCheck() {
