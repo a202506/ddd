@@ -69,6 +69,17 @@ class PunchForegroundService : Service() {
                 return@launch
             }
 
+            // Skip if today's slot is already marked successful in our DB — avoids opening
+            // DingTalk redundantly (which would kick the same account off the second phone).
+            // DRY_RUN is intentional testing and never blocked.
+            if (type != PunchType.DRY_RUN &&
+                PunchLogRepository(this@PunchForegroundService).hasSuccessfulPunchToday(type)
+            ) {
+                Timber.i("Skip %s — already recorded a success today", type)
+                stopAll()
+                return@launch
+            }
+
             val repo = ConfigRepository(this@PunchForegroundService)
             val passwordProvider: () -> String? = { repo.decryptPassword(cfg) }
 

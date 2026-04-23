@@ -4,6 +4,16 @@
 
     <!-- Main -->
     <string name="phase8_done_hint">全部 Phase 已就位：Setup 完成后 AlarmManager+WorkManager 自动调度；DryRun 可端到端试打；失败通过钉钉机器人 webhook 通知。生产前请在 1 部 vivo 上跑一周再批量推。</string>
+    <string name="section_daily">日常</string>
+    <string name="section_config">配置</string>
+    <string name="section_debug">调试工具</string>
+    <string name="section_recent_logs">最近打卡记录</string>
+    <string name="main_auto_punch_toggle">自动定时打卡</string>
+    <string name="main_auto_punch_help">关闭后仅保留「启动钉钉并检查登录状态」按钮，定时/兜底均不触发。</string>
+    <string name="main_auto_punch_on">自动打卡：✓ 已开启</string>
+    <string name="main_auto_punch_off">自动打卡：⏸ 已暂停（仅手动触发）</string>
+    <string name="main_next_run_disabled">下次：自动打卡已暂停</string>
+    <string name="main_recent_log_line">%1$s %2$s %3$s（%4$s）</string>
     <string name="main_accessibility_on">无障碍服务：✓ 已开启</string>
     <string name="main_accessibility_off">无障碍服务：✗ 未开启（前往 DryRun 页可一键打开）</string>
     <string name="main_dryrun">DryRun 工具</string>
@@ -29,6 +39,7 @@
     <string name="launch_check_screen_other">非钉钉界面</string>
     <string name="launch_check_screen_unknown">暂无法识别，可用 DryRun 的「Dump 当前界面」进一步排查</string>
     <string name="no_colleague_name">（未填写姓名）</string>
+    <string name="label_colleague">同事：%1$s</string>
     <string name="label_schedule">上班 %1$s · 下班 %2$s （±%3$d 秒抖动）</string>
     <string name="label_holiday_weekends">节假日：默认双休</string>
     <string name="label_holiday_custom">节假日：自定义清单（%1$d 天）</string>

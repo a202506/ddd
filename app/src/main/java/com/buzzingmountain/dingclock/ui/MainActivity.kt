@@ -3,6 +3,7 @@ package com.buzzingmountain.dingclock.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.buzzingmountain.dingclock.BuildConfig
@@ -21,16 +22,17 @@ import com.buzzingmountain.dingclock.databinding.ActivityMainBinding
 import com.buzzingmountain.dingclock.dingtalk.DingTalkLauncher
 import com.buzzingmountain.dingclock.net.NetworkProbe
 import com.buzzingmountain.dingclock.scheduler.HolidayChecker
+import com.buzzingmountain.dingclock.scheduler.PunchScheduler
 import com.buzzingmountain.dingclock.ui.dryrun.DryRunActivity
 import com.buzzingmountain.dingclock.ui.logs.LogsActivity
 import com.buzzingmountain.dingclock.ui.setup.SetupActivity
 import com.buzzingmountain.dingclock.util.TimeUtils
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var repo: ConfigRepository
+
+    /** Guard so programmatic setChecked in render() doesn't re-fire the listener. */
+    private var suppressSwitchListener = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,6 +64,10 @@ class MainActivity : AppCompatActivity() {
         binding.logsButton.setOnClickListener {
             startActivity(Intent(this, LogsActivity::class.java))
         }
+        binding.autoPunchSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (suppressSwitchListener) return@setOnCheckedChangeListener
+            onAutoPunchToggled(isChecked)
+        }
     }
 
     override fun onResume() {
@@ -76,19 +85,52 @@ class MainActivity : AppCompatActivity() {
 
     private fun render(cfg: AppConfig?) {
         if (cfg == null || !cfg.isComplete()) {
-            binding.notConfiguredText.visibility = View.VISIBLE
-            binding.configCard.visibility = View.GONE
-            binding.decryptCheckButton.visibility = View.GONE
-            binding.decryptResultText.text = ""
-            binding.setupButton.text = getString(R.string.main_open_setup)
+            renderUnconfigured()
             return
         }
+        renderConfigured(cfg)
+    }
+
+    private fun renderUnconfigured() {
+        binding.notConfiguredText.visibility = View.VISIBLE
+        listOf(
+            binding.colleagueText, binding.scheduleText, binding.holidayText,
+            binding.passwordStateText, binding.webhookText, binding.decryptCheckButton,
+        ).forEach { it.visibility = View.GONE }
+        binding.setupButton.text = getString(R.string.main_open_setup)
+        binding.decryptResultText.text = ""
+
+        suppressSwitchListener = true
+        binding.autoPunchSwitch.isChecked = false
+        binding.autoPunchSwitch.isEnabled = false
+        suppressSwitchListener = false
+
+        binding.autoPunchStateText.text = getString(R.string.main_auto_punch_off)
+        binding.nextRunText.visibility = View.GONE
+        renderRecentLogs(emptyList())
+    }
+
+    private fun renderConfigured(cfg: AppConfig) {
         binding.notConfiguredText.visibility = View.GONE
-        binding.configCard.visibility = View.VISIBLE
-        binding.decryptCheckButton.visibility = View.VISIBLE
+        listOf(
+            binding.colleagueText, binding.scheduleText, binding.holidayText,
+            binding.passwordStateText, binding.webhookText, binding.decryptCheckButton,
+        ).forEach { it.visibility = View.VISIBLE }
         binding.setupButton.text = getString(R.string.main_edit_setup)
 
-        binding.colleagueText.text = cfg.colleagueName.ifBlank { getString(R.string.no_colleague_name) }
+        suppressSwitchListener = true
+        binding.autoPunchSwitch.isChecked = cfg.enabled
+        binding.autoPunchSwitch.isEnabled = true
+        suppressSwitchListener = false
+
+        binding.autoPunchStateText.text = getString(
+            if (cfg.enabled) R.string.main_auto_punch_on else R.string.main_auto_punch_off,
+        )
+
+        binding.colleagueText.text = getString(
+            R.string.label_colleague,
+            cfg.colleagueName.ifBlank { getString(R.string.no_colleague_name) },
+        )
         binding.scheduleText.text = getString(
             R.string.label_schedule,
             cfg.morningPunchAt,
@@ -106,24 +148,57 @@ class MainActivity : AppCompatActivity() {
             if (cfg.webhookUrl.isBlank()) getString(R.string.label_webhook_missing)
             else getString(R.string.label_webhook_set)
 
-        // Show next scheduled punch.
-        binding.nextRunText.text = nextScheduledLabel(cfg)
+        // Next scheduled (only shown when auto-punch is on).
+        binding.nextRunText.visibility = if (cfg.enabled) View.VISIBLE else View.GONE
+        if (cfg.enabled) binding.nextRunText.text = nextScheduledLabel(cfg)
 
-        // Show most recent punch attempt from Room.
+        // Recent 5 logs.
         lifecycleScope.launch {
-            val recent = runCatching { PunchLogRepository(this@MainActivity).recent(limit = 1) }
+            val recent = runCatching { PunchLogRepository(this@MainActivity).recent(limit = 5) }
                 .getOrDefault(emptyList())
-            val first = recent.firstOrNull()
-            binding.recentLogText.text = if (first == null) {
-                getString(R.string.main_no_punch_yet)
-            } else {
-                val ts = DateTimeFormatter.ofPattern("MM-dd HH:mm")
-                    .format(LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(first.startedAt), ZoneId.systemDefault()))
-                val mark = if (first.success) "✓" else "✗"
-                val typeZh = runCatching { PunchType.valueOf(first.type) }.getOrNull()?.zh ?: first.type
-                getString(R.string.main_recent_log, ts, mark, typeZh, first.finalState)
-            }
+            renderRecentLogs(recent)
         }
+    }
+
+    private fun renderRecentLogs(entries: List<com.buzzingmountain.dingclock.db.PunchLogEntity>) {
+        val container = binding.recentLogsContainer
+        container.removeAllViews()
+        if (entries.isEmpty()) {
+            binding.recentLogsEmptyText.visibility = View.VISIBLE
+            return
+        }
+        binding.recentLogsEmptyText.visibility = View.GONE
+        val fmt = DateTimeFormatter.ofPattern("MM-dd HH:mm")
+        entries.forEach { e ->
+            val tv = TextView(this).apply {
+                val ts = fmt.format(
+                    LocalDateTime.ofInstant(java.time.Instant.ofEpochMilli(e.startedAt), ZoneId.systemDefault()),
+                )
+                val mark = if (e.success) "✓" else "✗"
+                val typeZh = runCatching { PunchType.valueOf(e.type) }.getOrNull()?.zh ?: e.type
+                text = getString(R.string.main_recent_log_line, ts, mark, typeZh, e.finalState)
+                textSize = 13f
+                setPadding(0, 4, 0, 4)
+            }
+            container.addView(tv)
+        }
+    }
+
+    private fun onAutoPunchToggled(isChecked: Boolean) {
+        val cfg = repo.load() ?: return
+        if (cfg.enabled == isChecked) return
+        val updated = cfg.copy(enabled = isChecked)
+        repo.save(updated)
+        Timber.i("auto-punch toggle → %s", isChecked)
+        // Reprogram AlarmManager + WorkManager immediately. When disabled, this cancels
+        // all pending punch alarms; when enabled, it rearms them.
+        runCatching { PunchScheduler(this).rescheduleAll() }
+            .onFailure { Timber.e(it, "rescheduleAll failed") }
+        binding.autoPunchStateText.text = getString(
+            if (isChecked) R.string.main_auto_punch_on else R.string.main_auto_punch_off,
+        )
+        binding.nextRunText.visibility = if (isChecked) View.VISIBLE else View.GONE
+        if (isChecked) binding.nextRunText.text = nextScheduledLabel(updated)
     }
 
     private fun nextScheduledLabel(cfg: AppConfig): String {

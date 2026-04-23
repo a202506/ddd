@@ -27,30 +27,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="16dp">
 
             <TextView
                 android:id="@+id/versionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="@color/text_secondary"
                 tools:text="v0.1.0 (1)"/>
 
+            <!-- Shown only when config is missing. -->
             <TextView
                 android:id="@+id/notConfiguredText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/main_not_configured"
                 android:textAppearance="?attr/textAppearanceBodyLarge"
                 android:visibility="gone"/>
 
+            <!-- ═══════════ 日常 (daily) ═══════════ -->
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/configCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:visibility="gone"
+                android:layout_marginTop="16dp"
                 app:cardCornerRadius="12dp"
                 app:contentPadding="16dp">
 
@@ -60,22 +61,114 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/colleagueText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?attr/textAppearanceTitleLarge"
-                        tools:text="同事 张三"/>
+                        android:text="@string/section_daily"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+                    <TextView
+                        android:id="@+id/accessibilityStatusText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        tools:text="无障碍服务：✓ 已开启"/>
+
+                    <TextView
+                        android:id="@+id/autoPunchStateText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        tools:text="自动打卡：已开启"/>
+
+                    <TextView
+                        android:id="@+id/nextRunText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        tools:text="下次：明天 09:00 上班"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/launchAndCheckButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="@string/main_launch_and_check"/>
+
+                    <TextView
+                        android:id="@+id/launchAndCheckResult"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="@color/text_secondary"/>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_marginVertical="12dp"
+                        android:layout_marginVertical="16dp"
                         android:background="?attr/colorOutlineVariant"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/section_recent_logs"
+                        android:textAppearance="?attr/textAppearanceTitleSmall"/>
+
+                    <LinearLayout
+                        android:id="@+id/recentLogsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:orientation="vertical"/>
+
+                    <TextView
+                        android:id="@+id/recentLogsEmptyText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/main_no_punch_yet"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="@color/text_secondary"
+                        android:visibility="gone"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- ═══════════ 配置 (config) ═══════════ -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/configCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:contentPadding="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/section_config"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+                    <TextView
+                        android:id="@+id/colleagueText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:textAppearance="?attr/textAppearanceBodyMedium"
+                        tools:text="同事：张三"/>
 
                     <TextView
                         android:id="@+id/scheduleText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         tools:text="上班 09:00 · 下班 18:00 (±90s)"/>
 
@@ -101,111 +194,129 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="通知：未配置"/>
+                        tools:text="通知 webhook：已配置"/>
 
-                    <TextView
-                        android:id="@+id/nextRunText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="下次：明天 09:00 上班"/>
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="?attr/colorOutlineVariant"/>
 
-                    <TextView
-                        android:id="@+id/recentLogText"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        tools:text="最近：04-17 09:01 ✓ 上班"/>
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/main_auto_punch_toggle"
+                                android:textAppearance="?attr/textAppearanceBodyMedium"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="@string/main_auto_punch_help"
+                                android:textAppearance="?attr/textAppearanceBodySmall"
+                                android:textColor="@color/text_secondary"/>
+                        </LinearLayout>
+
+                        <com.google.android.material.materialswitch.MaterialSwitch
+                            android:id="@+id/autoPunchSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"/>
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/setupButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/main_edit_setup"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/setupButton"
+            <!-- ═══════════ 调试 (debug) ═══════════ -->
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/main_open_setup"/>
+                android:layout_marginTop="16dp"
+                app:cardCornerRadius="12dp"
+                app:contentPadding="16dp">
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/decryptCheckButton"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/main_decrypt_check"/>
-
-            <TextView
-                android:id="@+id/decryptResultText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="@color/text_secondary"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/launchAndCheckButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="@string/main_launch_and_check"/>
-
-            <TextView
-                android:id="@+id/launchAndCheckResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textAppearance="?attr/textAppearanceBodySmall"
-                android:textColor="@color/text_secondary"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginVertical="20dp"
-                android:background="?attr/colorOutlineVariant"/>
-
-            <TextView
-                android:id="@+id/accessibilityStatusText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceBodyMedium"
-                tools:text="无障碍服务：未开启"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/dryRunButton"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/main_dryrun"/>
+                    android:orientation="vertical">
 
-                <Space
-                    android:layout_width="12dp"
-                    android:layout_height="match_parent"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/section_debug"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/logsButton"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/main_logs"/>
-            </LinearLayout>
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/decryptCheckButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/main_decrypt_check"/>
 
-            <TextView
-                android:id="@+id/phaseHintText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="@string/phase8_done_hint"
-                android:textAppearance="?attr/textAppearanceBodySmall"/>
+                    <TextView
+                        android:id="@+id/decryptResultText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="@color/text_secondary"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/dryRunButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/main_dryrun"/>
+
+                        <Space
+                            android:layout_width="12dp"
+                            android:layout_height="match_parent"/>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/logsButton"
+                            style="@style/Widget.Material3.Button.OutlinedButton"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/main_logs"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/phaseHintText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/phase8_done_hint"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="@color/text_secondary"/>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
         </LinearLayout>
     </ScrollView>
