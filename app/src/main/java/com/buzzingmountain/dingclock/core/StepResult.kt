@@ -1,6 +1,6 @@
 package com.buzzingmountain.dingclock.core
 
-/** Outcome of a single state-machine step / DryRun operation. */
+/** Outcome of a single state-machine step. */
 sealed class StepResult {
     data object Success : StepResult()
     data class Failure(val reason: String, val cause: Throwable? = null) : StepResult()

@@ -43,28 +43,6 @@
             android:label="@string/setup_title"
             android:parentActivityName=".ui.MainActivity"/>
 
-        <activity
-            android:name=".ui.logs.LogsActivity"
-            android:exported="false"
-            android:label="@string/logs_title"
-            android:parentActivityName=".ui.MainActivity"/>
-
-        <activity
-            android:name=".ui.dryrun.DryRunActivity"
-            android:exported="false"
-            android:label="@string/dryrun_title"
-            android:parentActivityName=".ui.MainActivity"/>
-
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
-        </provider>
-
         <service
             android:name=".accessibility.DingAccessibilityService"
             android:exported="true"

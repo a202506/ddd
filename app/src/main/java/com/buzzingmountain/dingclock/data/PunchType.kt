@@ -4,5 +4,4 @@ package com.buzzingmountain.dingclock.data
 enum class PunchType(val zh: String) {
     MORNING("上班"),
     EVENING("下班"),
-    DRY_RUN("试打"),
 }

@@ -49,8 +49,8 @@ class PunchForegroundService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val typeName = intent?.getStringExtra(EXTRA_TYPE) ?: PunchType.DRY_RUN.name
-        val type = runCatching { PunchType.valueOf(typeName) }.getOrDefault(PunchType.DRY_RUN)
+        val typeName = intent?.getStringExtra(EXTRA_TYPE) ?: PunchType.MORNING.name
+        val type = runCatching { PunchType.valueOf(typeName) }.getOrDefault(PunchType.MORNING)
         Timber.i("Start punch flow type=%s", type)
 
         startForegroundCompat(buildNotification(getString(R.string.notif_punch_starting)))
@@ -71,10 +71,7 @@ class PunchForegroundService : Service() {
 
             // Skip if today's slot is already marked successful in our DB — avoids opening
             // DingTalk redundantly (which would kick the same account off the second phone).
-            // DRY_RUN is intentional testing and never blocked.
-            if (type != PunchType.DRY_RUN &&
-                PunchLogRepository(this@PunchForegroundService).hasSuccessfulPunchToday(type)
-            ) {
+            if (PunchLogRepository(this@PunchForegroundService).hasSuccessfulPunchToday(type)) {
                 Timber.i("Skip %s — already recorded a success today", type)
                 stopAll()
                 return@launch

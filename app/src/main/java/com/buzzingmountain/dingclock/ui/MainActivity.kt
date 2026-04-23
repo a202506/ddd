@@ -23,8 +23,6 @@ import com.buzzingmountain.dingclock.dingtalk.DingTalkLauncher
 import com.buzzingmountain.dingclock.net.NetworkProbe
 import com.buzzingmountain.dingclock.scheduler.HolidayChecker
 import com.buzzingmountain.dingclock.scheduler.PunchScheduler
-import com.buzzingmountain.dingclock.ui.dryrun.DryRunActivity
-import com.buzzingmountain.dingclock.ui.logs.LogsActivity
 import com.buzzingmountain.dingclock.ui.setup.SetupActivity
 import com.buzzingmountain.dingclock.util.TimeUtils
 import kotlinx.coroutines.delay
@@ -58,12 +56,6 @@ class MainActivity : AppCompatActivity() {
         }
         binding.decryptCheckButton.setOnClickListener { runDecryptCheck() }
         binding.launchAndCheckButton.setOnClickListener { runLaunchAndCheck() }
-        binding.dryRunButton.setOnClickListener {
-            startActivity(Intent(this, DryRunActivity::class.java))
-        }
-        binding.logsButton.setOnClickListener {
-            startActivity(Intent(this, LogsActivity::class.java))
-        }
         binding.autoPunchSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (suppressSwitchListener) return@setOnCheckedChangeListener
             onAutoPunchToggled(isChecked)

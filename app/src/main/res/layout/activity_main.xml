@@ -279,42 +279,6 @@
                         android:layout_marginTop="6dp"
                         android:textAppearance="?attr/textAppearanceBodySmall"
                         android:textColor="@color/text_secondary"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:orientation="horizontal">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/dryRunButton"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/main_dryrun"/>
-
-                        <Space
-                            android:layout_width="12dp"
-                            android:layout_height="match_parent"/>
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/logsButton"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/main_logs"/>
-                    </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/phaseHintText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/phase8_done_hint"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:textColor="@color/text_secondary"/>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
