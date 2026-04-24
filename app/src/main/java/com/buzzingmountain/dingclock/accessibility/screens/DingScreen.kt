@@ -32,8 +32,8 @@ sealed class DingScreen {
 
             return when {
                 hasAny(joined, "打卡成功", "已打卡", "上班打卡成功", "下班打卡成功", "外勤打卡成功") -> PunchSuccess
-                hasAny(joined, "极速打卡", "上班打卡", "下班打卡", "考勤打卡", "外勤打卡") -> Attendance
                 isLoginScreen(joined) -> Login
+                isAttendanceScreen(joined) -> Attendance
                 hasAny(joined, "工作", "消息", "通讯录", "我的") -> Home
                 hasAny(joined, "钉钉", "正在加载", "loading") -> Splash
                 else -> Unknown
@@ -51,6 +51,12 @@ sealed class DingScreen {
             val mentionsLogin = hasAny(joined, "登录", "Sign in")
             val mentionsAccount = hasAny(joined, "请输入手机号", "手机号", "工作号")
             return mentionsLogin && mentionsAccount
+        }
+
+        private fun isAttendanceScreen(joined: String): Boolean {
+            if (hasAny(joined, "极速打卡", "上班打卡", "下班打卡", "外勤打卡")) return true
+            return hasAny(joined, "考勤打卡") &&
+                hasAny(joined, "打卡记录", "打卡规则", "考勤统计", "月历", "班次")
         }
 
         private fun hasAny(joined: String, vararg fragments: String): Boolean =

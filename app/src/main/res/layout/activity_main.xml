@@ -74,6 +74,23 @@
                         android:textAppearance="?attr/textAppearanceBodyMedium"
                         tools:text="无障碍服务：✓ 已开启"/>
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/accessibilitySettingsButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/main_open_accessibility_settings"/>
+
+                    <TextView
+                        android:id="@+id/accessibilityHelpText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/main_accessibility_help"
+                        android:textAppearance="?attr/textAppearanceBodySmall"
+                        android:textColor="@color/text_secondary"/>
+
                     <TextView
                         android:id="@+id/autoPunchStateText"
                         android:layout_width="wrap_content"
@@ -95,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/main_launch_and_check"/>
+                        android:text="@string/main_launch_and_login"/>
 
                     <TextView
                         android:id="@+id/launchAndCheckResult"

@@ -6,6 +6,7 @@ import android.os.SystemClock
 import com.buzzingmountain.dingclock.accessibility.AccessibilityBridge
 import com.buzzingmountain.dingclock.accessibility.NodeDumper
 import com.buzzingmountain.dingclock.accessibility.screens.DingActions
+import com.buzzingmountain.dingclock.accessibility.screens.DingLoginFlow
 import com.buzzingmountain.dingclock.accessibility.screens.DingScreen
 import com.buzzingmountain.dingclock.core.StepResult
 import com.buzzingmountain.dingclock.dingtalk.DingTalkLauncher
@@ -155,40 +156,10 @@ class PunchStateMachine(
      * Phone number is already remembered by DingTalk; we never type it.
      */
     private suspend fun stepLogin(): State {
-        // S0
-        if (!DingActions.clickByText("下一步", "Next", timeoutMs = 8_000, tag = "login-s0-next")) {
-            return State.Failed("登录(S0)：找不到「下一步」")
+        return when (val result = DingLoginFlow.completeSavedPasswordLogin(context.passwordProvider)) {
+            StepResult.Success -> State.Classify
+            is StepResult.Failure -> State.Failed(result.reason)
         }
-        delay(1_000)
-
-        // S1 — consent bottom sheet. "同意并登录" is the primary action.
-        if (!DingActions.clickByText("同意并登录", timeoutMs = 6_000, tag = "login-s1-agree")) {
-            return State.Failed("登录(S1)：找不到「同意并登录」")
-        }
-        delay(1_200)
-
-        // S2 — password-login entry. Button shows "密码登录" (with lock icon).
-        if (!DingActions.clickByText("密码登录", timeoutMs = 6_000, tag = "login-s2-pw-entry")) {
-            return State.Failed("登录(S2)：找不到「密码登录」")
-        }
-        delay(1_200)
-
-        // S3 — fill password, submit.
-        val plain = context.passwordProvider()
-        if (plain.isNullOrEmpty()) {
-            return State.Failed("无可用密码：未配置或解密失败")
-        }
-        val typed = DingActions.setPasswordField(value = plain, timeoutMs = 8_000)
-        @Suppress("UNUSED_VALUE") var p: String? = plain
-        p = null
-        if (!typed) return State.Failed("登录(S3)：找不到密码输入框")
-        delay(500)
-        // Use equalsOnly so we don't accidentally re-hit "密码登录" if it's still on screen.
-        if (!DingActions.clickByTextExact("登录", timeoutMs = 5_000, tag = "login-s3-submit")) {
-            return State.Failed("登录(S3)：找不到「登录」按钮")
-        }
-        delay(3_500) // login round-trip
-        return State.Classify
     }
 
     private suspend fun stepNavigateToAttendance(): State {

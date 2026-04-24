@@ -2,8 +2,10 @@ package com.buzzingmountain.dingclock.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.buzzingmountain.dingclock.BuildConfig
@@ -11,6 +13,7 @@ import com.buzzingmountain.dingclock.R
 import com.buzzingmountain.dingclock.accessibility.AccessibilityBridge
 import com.buzzingmountain.dingclock.accessibility.AccessibilityHelper
 import com.buzzingmountain.dingclock.accessibility.DingAccessibilityService
+import com.buzzingmountain.dingclock.accessibility.screens.DingLoginFlow
 import com.buzzingmountain.dingclock.accessibility.screens.DingScreen
 import com.buzzingmountain.dingclock.core.StepResult
 import com.buzzingmountain.dingclock.data.AppConfig
@@ -54,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.setupButton.setOnClickListener {
             startActivity(Intent(this, SetupActivity::class.java))
         }
+        binding.accessibilitySettingsButton.setOnClickListener { openAccessibilitySettings() }
         binding.decryptCheckButton.setOnClickListener { runDecryptCheck() }
         binding.launchAndCheckButton.setOnClickListener { runLaunchAndCheck() }
         binding.autoPunchSwitch.setOnCheckedChangeListener { _, isChecked ->
@@ -223,6 +227,7 @@ class MainActivity : AppCompatActivity() {
     private fun runLaunchAndCheck() {
         val btn = binding.launchAndCheckButton
         val out = binding.launchAndCheckResult
+        val cfg = repo.load()
         btn.isEnabled = false
         out.text = getString(R.string.launch_check_running)
         lifecycleScope.launch {
@@ -264,27 +269,54 @@ class MainActivity : AppCompatActivity() {
 
             // 4. Classify current screen — login vs already logged in.
             delay(2_000)
-            val screenLabel = classifyWithRetry()
-            append(getString(R.string.launch_check_classified, screenLabel))
+            val screen = classifyScreenWithRetry()
+            append(getString(R.string.launch_check_classified, screenLabel(screen)))
+
+            if (screen == DingScreen.Login) {
+                append(getString(R.string.launch_check_login_needed))
+                when (val login = DingLoginFlow.completeSavedPasswordLogin { cfg?.let(repo::decryptPassword) }) {
+                    StepResult.Success -> {
+                        append(getString(R.string.launch_check_login_ok))
+                        val afterLoginScreen = classifyScreenWithRetry()
+                        append(getString(R.string.launch_check_classified, screenLabel(afterLoginScreen)))
+                    }
+                    is StepResult.Failure -> {
+                        append(getString(R.string.launch_check_login_fail, login.reason))
+                        btn.isEnabled = true
+                        return@launch
+                    }
+                }
+            }
+
+            append(getString(R.string.launch_check_finished))
 
             btn.isEnabled = true
         }
     }
 
-    private suspend fun classifyWithRetry(): String {
+    private suspend fun classifyScreenWithRetry(): DingScreen {
         repeat(6) {
             when (val s = DingScreen.classify(AccessibilityBridge.currentRoot())) {
-                DingScreen.Login -> return getString(R.string.launch_check_screen_login)
-                DingScreen.Home -> return getString(R.string.launch_check_screen_home)
-                DingScreen.Attendance -> return getString(R.string.launch_check_screen_attendance)
-                DingScreen.PunchSuccess -> return getString(R.string.launch_check_screen_punched)
+                DingScreen.Login,
+                DingScreen.Home,
+                DingScreen.Attendance,
+                DingScreen.PunchSuccess,
+                DingScreen.NotDingTalk -> return s
                 DingScreen.Splash, DingScreen.Unknown -> delay(1_000)
-                DingScreen.NotDingTalk -> return getString(R.string.launch_check_screen_other)
-                else -> return s::class.simpleName.orEmpty()
             }
         }
-        return getString(R.string.launch_check_screen_unknown)
+        return DingScreen.Unknown
     }
+
+    private fun screenLabel(screen: DingScreen): String =
+        when (screen) {
+            DingScreen.Login -> getString(R.string.launch_check_screen_login)
+            DingScreen.Home -> getString(R.string.launch_check_screen_home)
+            DingScreen.Attendance -> getString(R.string.launch_check_screen_attendance)
+            DingScreen.PunchSuccess -> getString(R.string.launch_check_screen_punched)
+            DingScreen.NotDingTalk -> getString(R.string.launch_check_screen_other)
+            DingScreen.Splash, DingScreen.Unknown -> getString(R.string.launch_check_screen_unknown)
+        }
 
     private fun runDecryptCheck() {
         val cfg = repo.load() ?: return
@@ -295,5 +327,13 @@ class MainActivity : AppCompatActivity() {
             val masked = "•".repeat(plain.length.coerceAtMost(12))
             binding.decryptResultText.text = getString(R.string.decrypt_ok, masked, plain.length)
         }
+    }
+
+    private fun openAccessibilitySettings() {
+        val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)
+        runCatching { startActivity(intent) }
+            .onFailure {
+                Toast.makeText(this, R.string.intent_unavailable, Toast.LENGTH_LONG).show()
+            }
     }
 }
