@@ -21,8 +21,10 @@
         android:id="@+id/manualCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_margin="16dp"
-        app:cardBackgroundColor="@color/md_theme_surface"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:cardBackgroundColor="#F6FAFC"
         app:cardCornerRadius="28dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,101 +38,87 @@
             android:padding="20dp">
 
             <TextView
-                android:id="@+id/versionText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="@string/section_manual"
+                android:textAppearance="?attr/textAppearanceTitleMedium"/>
+
+            <TextView
+                android:id="@+id/notConfiguredText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                android:textColor="@color/text_secondary"/>
+
+            <TextView
+                android:id="@+id/accessibilityStatusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                tools:text="无障碍服务：✓ 已开启"/>
+
+            <TextView
+                android:id="@+id/passwordStateText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textAppearance="?attr/textAppearanceBodyMedium"
+                tools:text="密码：已加密保存"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/accessibilitySettingsButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:enabled="false"
+                android:text="@string/main_accessibility_ready"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/launchAndCheckButton"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:lineSpacingExtra="2dp"
+                android:padding="28dp"
+                android:text="@string/main_launch_and_login"
+                android:textAppearance="?attr/textAppearanceTitleMedium"
+                app:cornerRadius="110dp"/>
+
+            <TextView
+                android:id="@+id/versionText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="center_horizontal"
                 android:textAppearance="?attr/textAppearanceBodySmall"
                 android:textColor="@color/text_secondary"
                 tools:text="v0.1.0 (1)"/>
 
-            <com.google.android.material.card.MaterialCardView
+            <TextView
+                android:id="@+id/launchAndCheckResult"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center_horizontal"
+                android:textAppearance="?attr/textAppearanceBodySmall"
+                android:textColor="@color/text_secondary"/>
+
+            <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="16dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="#F6FAFC"
-                app:cardCornerRadius="24dp"
-                app:contentPadding="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/section_manual"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
-
-                    <TextView
-                        android:id="@+id/notConfiguredText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        android:textColor="@color/text_secondary"/>
-
-                    <TextView
-                        android:id="@+id/accessibilityStatusText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="无障碍服务：✓ 已开启"/>
-
-                    <TextView
-                        android:id="@+id/passwordStateText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:textAppearance="?attr/textAppearanceBodyMedium"
-                        tools:text="密码：已加密保存"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/accessibilitySettingsButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:enabled="false"
-                        android:text="@string/main_accessibility_ready"/>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/launchAndCheckButton"
-                        android:layout_width="220dp"
-                        android:layout_height="220dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center"
-                        android:insetTop="0dp"
-                        android:insetBottom="0dp"
-                        android:lineSpacingExtra="2dp"
-                        android:padding="28dp"
-                        android:text="@string/main_launch_and_login"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"
-                        app:cornerRadius="110dp"/>
-
-                    <TextView
-                        android:id="@+id/launchAndCheckResult"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:gravity="center_horizontal"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:textColor="@color/text_secondary"/>
-
-                    <Space
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:layout_weight="1"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
