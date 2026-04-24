@@ -4,12 +4,7 @@ import android.accessibilityservice.AccessibilityService
 import android.view.accessibility.AccessibilityEvent
 import timber.log.Timber
 
-/**
- * Long-running AccessibilityService: logs every TYPE_WINDOW_STATE_CHANGED so we can see which
- * activity is in front, and exposes a [ACTION_DUMP_ROOT] broadcast (wired to a notification
- * action) that dumps the current window's accessibility node tree into the log file. The
- * punch state machine reads from [AccessibilityBridge] to classify and drive DingTalk.
- */
+/** Accessibility bridge for manual DingTalk launch and password-assisted login. */
 class DingAccessibilityService : AccessibilityService() {
 
     override fun onServiceConnected() {
@@ -18,10 +13,10 @@ class DingAccessibilityService : AccessibilityService() {
         Timber.i("AccessibilityService connected")
     }
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        Timber.i("AccessibilityService unbinding")
+    override fun onDestroy() {
+        Timber.i("AccessibilityService destroyed")
         instance = null
-        return super.onUnbind(intent)
+        super.onDestroy()
     }
 
     override fun onAccessibilityEvent(event: AccessibilityEvent?) {
