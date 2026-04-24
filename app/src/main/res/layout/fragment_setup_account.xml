@@ -13,30 +13,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/setup_account_hint"
+            android:text="@string/setup_password_hint"
             android:textAppearance="?attr/textAppearanceTitleMedium"/>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/colleagueLayout"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:hint="@string/field_colleague">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/colleagueEdit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout"
             style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="20dp"
             app:endIconMode="password_toggle"
             android:hint="@string/field_password">
 
@@ -59,7 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="@string/setup_account_security_note"
+            android:text="@string/setup_password_security_note"
             android:textAppearance="?attr/textAppearanceBodySmall"/>
 
     </LinearLayout>

@@ -35,4 +35,11 @@ Once these are set, `Build APK` and `Release` workflows will produce signed APKs
 
 ## Local dev (optional)
 
-Set the same environment variables and `KEYSTORE_PATH=/absolute/path/to/release.jks` before running `./gradlew :app:assembleRelease`. Unsigned builds are also produced if the secrets are absent.
+Set the same environment variables and `KEYSTORE_PATH=/absolute/path/to/release.jks` before running `./gradlew :app:assembleRelease`.
+
+If this repo still has no checked-in Gradle wrapper, generate it first:
+
+```bash
+gradle wrapper --gradle-version 8.7
+chmod +x gradlew
+```

@@ -1,120 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">钉钉打卡助手</string>
+    <string name="app_name">钉钉辅助登录</string>
 
-    <!-- Main -->
-    <string name="section_daily">日常</string>
-    <string name="section_config">配置</string>
-    <string name="section_debug">调试工具</string>
-    <string name="section_recent_logs">最近打卡记录</string>
-    <string name="main_auto_punch_toggle">自动定时打卡</string>
-    <string name="main_auto_punch_help">关闭后仅保留「启动钉钉并辅助登录」按钮，定时/兜底均不触发。</string>
-    <string name="main_open_accessibility_settings">打开无障碍设置</string>
-    <string name="main_accessibility_help">如果系统把本应用的无障碍权限收回，先点这里重新开启，再回到首页继续操作。</string>
-    <string name="main_auto_punch_on">自动打卡：✓ 已开启</string>
-    <string name="main_auto_punch_off">自动打卡：⏸ 已暂停（仅手动触发）</string>
-    <string name="main_next_run_disabled">下次：自动打卡已暂停</string>
-    <string name="main_recent_log_line">%1$s %2$s %3$s（%4$s）</string>
+    <string name="section_manual">手动启动</string>
+    <string name="section_setup">配置</string>
+    <string name="main_not_configured">尚未保存密码。先进入配置页保存密码，再用首页按钮手动启动钉钉并辅助登录。</string>
+    <string name="main_configured_help">已保存密码。使用下方按钮手动启动钉钉；如遇到登录页，应用会尝试自动填充密码。</string>
     <string name="main_accessibility_on">无障碍服务：✓ 已开启</string>
-    <string name="main_accessibility_off">无障碍服务：✗ 未开启（请到系统设置开启）</string>
-    <string name="main_not_configured">尚未配置。点下方按钮进入向导，填好账号、时间、权限和通知。</string>
-    <string name="main_open_setup">开始配置</string>
-    <string name="main_edit_setup">编辑配置</string>
-    <string name="main_decrypt_check">验证密码可解密</string>
+    <string name="main_accessibility_off">无障碍服务：✗ 未开启</string>
+    <string name="main_open_accessibility_settings">打开无障碍设置</string>
     <string name="main_launch_and_login">启动钉钉并辅助登录</string>
-    <string name="launch_check_running">手动流程已启动 …</string>
-    <string name="launch_check_acc_missing">✗ 无障碍服务未开启，请先到系统设置打开</string>
-    <string name="launch_check_probing">网络探测中 …（HEAD dingtalk.com）</string>
-    <string name="launch_check_probe_ok">✓ 网络可达</string>
-    <string name="launch_check_probe_fail">✗ %1$s</string>
-    <string name="launch_check_launching">启动钉钉并等待前台 …</string>
-    <string name="launch_check_foreground_ok">✓ 钉钉已进入前台</string>
-    <string name="launch_check_foreground_fail">✗ 启动失败：%1$s</string>
-    <string name="launch_check_login_needed">检测到登录页，开始自动登录 …</string>
-    <string name="launch_check_login_ok">✓ 已提交登录，等待进入已登录界面</string>
-    <string name="launch_check_login_fail">✗ 自动登录失败：%1$s</string>
-    <string name="launch_check_classified">当前界面：%1$s</string>
-    <string name="launch_check_screen_login">需要登录（未登录或被踢出）</string>
-    <string name="launch_check_screen_home">首页，已登录，可等待极速打卡或手动继续</string>
-    <string name="launch_check_screen_attendance">考勤页，已登录，可等待极速打卡或手动继续</string>
-    <string name="launch_check_screen_punched">已有打卡成功页</string>
-    <string name="launch_check_screen_other">非钉钉界面</string>
-    <string name="launch_check_screen_unknown">暂无法识别</string>
-    <string name="launch_check_finished">流程结束：应用已停止进一步操作</string>
-    <string name="no_colleague_name">（未填写姓名）</string>
-    <string name="label_colleague">同事：%1$s</string>
-    <string name="label_schedule">上班 %1$s · 下班 %2$s （±%3$d 秒抖动）</string>
-    <string name="label_holiday_weekends">节假日：默认双休</string>
-    <string name="label_holiday_custom">节假日：自定义清单（%1$d 天）</string>
+    <string name="main_decrypt_check">验证密码可解密</string>
+    <string name="main_save_password">保存密码</string>
+    <string name="main_edit_password">修改密码与权限</string>
     <string name="label_password_saved">密码：已加密保存</string>
     <string name="label_password_missing">密码：未保存</string>
-    <string name="label_webhook_set">通知 webhook：已配置</string>
-    <string name="label_webhook_missing">通知 webhook：未配置</string>
     <string name="decrypt_ok">解密 OK：%1$s（共 %2$d 位）</string>
     <string name="decrypt_failed">解密失败，请重新输入密码</string>
+    <string name="launch_check_running">正在启动钉钉 …</string>
+    <string name="launch_check_acc_missing">无障碍服务未开启，请先到系统设置中打开。</string>
+    <string name="launch_check_probing">网络探测中 …</string>
+    <string name="launch_check_probe_ok">网络可达，准备启动钉钉。</string>
+    <string name="launch_check_probe_fail">网络探测失败：%1$s</string>
+    <string name="launch_check_foreground_ok">钉钉已进入前台，正在识别页面。</string>
+    <string name="launch_check_foreground_fail">启动钉钉失败：%1$s</string>
+    <string name="launch_check_login_needed">检测到登录页，开始自动填充密码 …</string>
+    <string name="launch_check_login_ok">密码已提交，请继续观察钉钉是否登录成功。</string>
+    <string name="launch_check_login_fail">自动登录失败：%1$s</string>
+    <string name="launch_check_finished">当前界面：%1$s</string>
+    <string name="launch_check_screen_login">登录页</string>
+    <string name="launch_check_screen_home">已登录首页</string>
+    <string name="launch_check_screen_attendance">考勤页</string>
+    <string name="launch_check_screen_punched">打卡成功页</string>
+    <string name="launch_check_screen_other">非钉钉界面</string>
+    <string name="launch_check_screen_unknown">无法识别</string>
 
-    <!-- Setup -->
-    <string name="setup_title">配置向导</string>
+    <string name="setup_title">配置</string>
     <string name="setup_prev">上一步</string>
     <string name="setup_next">下一步</string>
     <string name="setup_finish">完成</string>
     <string name="setup_saved">配置已保存</string>
     <string name="setup_err_password_required">请填写密码</string>
 
-    <!-- Account -->
-    <string name="setup_account_hint">本机对应同事的钉钉账号</string>
-    <string name="setup_account_security_note">密码使用 Android Keystore（AES-256-GCM）加密后再写入加密的 SharedPreferences，本机重启后仍可解密。卸载本应用即丢失。</string>
-    <string name="field_colleague">同事姓名（仅本机显示）</string>
+    <string name="setup_password_hint">保存钉钉密码</string>
+    <string name="setup_password_security_note">密码使用 Android Keystore（AES-256-GCM）加密后再写入加密的 SharedPreferences。卸载应用后无法恢复。</string>
     <string name="field_password">钉钉密码</string>
     <string name="password_pending_save">将在完成时加密保存</string>
     <string name="password_already_saved">已加密保存（留空表示沿用旧密码）</string>
     <string name="password_not_set">尚未保存密码</string>
 
-    <!-- Schedule -->
-    <string name="setup_schedule_hint">打卡时间与节假日</string>
-    <string name="field_morning_time">上班打卡时间</string>
-    <string name="field_evening_time">下班打卡时间</string>
-    <string name="field_jitter">随机抖动（秒）</string>
-    <string name="field_holiday_mode">节假日策略</string>
-    <string name="holiday_use_custom_list">使用自定义节假日清单（默认仅双休）</string>
-    <string name="field_custom_holidays">自定义节假日</string>
-    <string name="custom_holidays_help">每行一个 yyyy-MM-dd，例如 2026-05-01</string>
-
-    <!-- Permissions -->
-    <string name="setup_permissions_hint">必备权限（9 项一键引导）</string>
-    <string name="open_accessibility_settings">开启无障碍服务</string>
-    <string name="intent_unavailable">系统不支持该跳转，请手动到设置中查找。</string>
-
-    <!-- Notify -->
-    <string name="setup_notify_hint">失败告警 webhook</string>
-    <string name="setup_notify_help">推荐建一个钉钉群 → 群机器人 → 自定义机器人，启用加签后把 Webhook URL 与 Secret 填到下面。打卡失败、需短信验证等异常会发到这个群。</string>
-    <string name="field_webhook_url">Webhook URL</string>
-    <string name="field_webhook_secret">加签 Secret</string>
-    <!-- Accessibility service -->
-    <string name="accessibility_service_description">用于自动驱动钉钉打卡界面、识别登录状态与点击按钮。开启后通知栏会出现一个「Dump」按钮，可在任意界面抓取节点树到本应用日志，便于调试。</string>
-    <string name="notif_status_title">钉钉打卡助手</string>
-    <string name="notif_status_text">无障碍服务运行中。下拉点 Dump 抓节点树。</string>
-    <string name="notif_action_dump">Dump 节点树</string>
-
-    <!-- Permissions list (Phase 8) -->
-    <string name="setup_permissions_help">每一项点「打开设置」跳转，操作完后勾「我已开启」。9 项全开后回向导点「完成」。</string>
+    <string name="setup_permissions_hint">系统权限</string>
+    <string name="setup_permissions_help">手动使用至少需要开启无障碍服务。其余项目是兼容不同 ROM 的可选检查项。</string>
     <string name="setup_permissions_rom">设备：%1$s</string>
     <string name="perm_open_setting">打开设置</string>
-    <string name="perm_done_check">我已开启</string>
+    <string name="perm_done_check">我已处理</string>
+    <string name="intent_unavailable">系统不支持该跳转，请手动到设置中查找。</string>
 
-    <!-- Webhook test -->
-    <string name="webhook_test_send">发送测试消息</string>
-    <string name="webhook_test_running">发送中 …</string>
-    <string name="webhook_test_ok">✓ 已送达，请到群里确认</string>
-    <string name="webhook_test_fail">✗ 发送失败，检查 URL/Secret/网络</string>
-
-    <!-- Foreground service notifications -->
-    <string name="notif_punch_title">钉钉打卡进行中</string>
-    <string name="notif_punch_starting">准备开始 …</string>
-
-    <!-- Main: schedule + recent log -->
-    <string name="main_next_run">下次：%1$s %2$s %3$s</string>
-    <string name="main_no_next_run">下次：暂未排期（请检查节假日设置）</string>
-    <string name="main_no_punch_yet">最近打卡：暂无记录</string>
-    <string name="main_recent_log">最近：%1$s %2$s %3$s（%4$s）</string>
+    <string name="accessibility_service_description">用于识别钉钉登录状态并辅助填充密码。</string>
 </resources>

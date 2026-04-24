@@ -19,7 +19,6 @@ class SetupViewModel(app: Application) : AndroidViewModel(app) {
     private val _state = MutableStateFlow(repo.load() ?: AppConfig())
     val state: StateFlow<AppConfig> = _state.asStateFlow()
 
-    /** Plaintext password entered in the wizard; stays in memory only until [persist]. */
     var plaintextPassword: String = ""
         private set
 
@@ -31,7 +30,6 @@ class SetupViewModel(app: Application) : AndroidViewModel(app) {
         _state.value = mutator(_state.value)
     }
 
-    /** Encrypts the password if a new one was typed, then persists. Returns the saved config. */
     fun persist(): AppConfig {
         var cfg = _state.value
         if (plaintextPassword.isNotEmpty()) {

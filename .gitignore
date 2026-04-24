@@ -13,6 +13,7 @@ local.properties
 !keystore/README.md
 /app/release
 /app/build
+/artifacts/
 *.apk
 *.aab
 

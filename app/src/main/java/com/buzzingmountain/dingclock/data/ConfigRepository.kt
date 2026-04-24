@@ -29,15 +29,6 @@ class ConfigRepository(context: Context) {
         prefs.putString(KEY_CONFIG, adapter.toJson(config))
     }
 
-    fun clear() {
-        prefs.remove(KEY_CONFIG)
-    }
-
-    fun hasConfig(): Boolean {
-        val cfg = load() ?: return false
-        return cfg.isComplete()
-    }
-
     /** Encrypts a plaintext password into a base64(iv||ct) string suitable for AppConfig.passwordCipher. */
     fun encryptPassword(plain: String): String = KeystoreManager.encrypt(plain)
 

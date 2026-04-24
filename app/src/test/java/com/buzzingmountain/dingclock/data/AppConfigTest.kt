@@ -27,27 +27,14 @@ class AppConfigTest {
     }
 
     @Test
-    fun `config with blank punch times is incomplete`() {
-        val cfg = AppConfig(passwordCipher = "ZmFrZWNpcGhlcg==", morningPunchAt = "")
+    fun `config with blank password is incomplete`() {
+        val cfg = AppConfig(passwordCipher = "")
         assertFalse(cfg.isComplete())
     }
 
     @Test
-    fun `moshi roundtrip preserves all fields`() {
-        val original = AppConfig(
-            colleagueName = "张三",
-            passwordCipher = "Y2lwaGVy",
-            morningPunchAt = "08:30",
-            eveningPunchAt = "18:30",
-            randomJitterSeconds = 60,
-            holidayMode = HolidayMode.CUSTOM_LIST,
-            customHolidays = setOf("2026-05-01", "2026-10-01"),
-            webhookUrl = "https://oapi.dingtalk.com/robot/send?access_token=x",
-            webhookSecret = "SECabc",
-            preArmSeconds = 30,
-            postDelaySeconds = 90,
-            enabled = false,
-        )
+    fun `moshi roundtrip preserves password field`() {
+        val original = AppConfig(passwordCipher = "Y2lwaGVy")
         val json = adapter.toJson(original)
         val parsed = adapter.fromJson(json)
         assertNotNull(parsed)

@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.buzzingmountain.dingclock.R
 import com.buzzingmountain.dingclock.databinding.ActivitySetupBinding
-import com.buzzingmountain.dingclock.scheduler.PunchScheduler
 import com.google.android.material.tabs.TabLayoutMediator
 
 class SetupActivity : AppCompatActivity() {
@@ -17,10 +16,8 @@ class SetupActivity : AppCompatActivity() {
     private val vm: SetupViewModel by viewModels()
 
     private val pages: List<Pair<String, () -> Fragment>> = listOf(
-        "账号" to ::AccountFragment,
-        "时间" to ::ScheduleFragment,
+        "密码" to ::AccountFragment,
         "权限" to ::PermissionsFragment,
-        "通知" to ::NotifyFragment,
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,8 +64,6 @@ class SetupActivity : AppCompatActivity() {
             return
         }
         vm.persist()
-        // Re-arm AlarmManager + WorkManager based on the new schedule.
-        runCatching { PunchScheduler(this).rescheduleAll() }
         Toast.makeText(this, R.string.setup_saved, Toast.LENGTH_SHORT).show()
         finish()
     }

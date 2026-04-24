@@ -36,9 +36,6 @@ class AccountFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 vm.state.collect { cfg ->
-                    if (binding.colleagueEdit.text?.toString().orEmpty() != cfg.colleagueName) {
-                        binding.colleagueEdit.setText(cfg.colleagueName)
-                    }
                     binding.passwordStatus.text = when {
                         vm.plaintextPassword.isNotEmpty() -> getString(R.string.password_pending_save)
                         cfg.passwordCipher.isNotEmpty() -> getString(R.string.password_already_saved)
@@ -48,9 +45,6 @@ class AccountFragment : Fragment() {
             }
         }
 
-        binding.colleagueEdit.addTextChangedListener(textWatcher { v ->
-            vm.update { it.copy(colleagueName = v) }
-        })
         binding.passwordEdit.addTextChangedListener(textWatcher { v ->
             vm.setPassword(v)
             binding.passwordStatus.text =
