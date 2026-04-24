@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SetupActivity::class.java))
         }
         binding.accessibilitySettingsButton.setOnClickListener { openAccessibilitySettings() }
-        binding.decryptCheckButton.setOnClickListener { runDecryptCheck() }
         binding.launchAndCheckButton.setOnClickListener { runLaunchAndCheck() }
     }
 
@@ -55,6 +54,10 @@ class MainActivity : AppCompatActivity() {
         binding.accessibilityStatusText.text = getString(
             if (on) R.string.main_accessibility_on else R.string.main_accessibility_off,
         )
+        binding.accessibilitySettingsButton.isEnabled = !on
+        binding.accessibilitySettingsButton.text = getString(
+            if (on) R.string.main_accessibility_ready else R.string.main_restore_accessibility,
+        )
     }
 
     private fun renderConfigStatus(cfg: AppConfig?) {
@@ -66,7 +69,7 @@ class MainActivity : AppCompatActivity() {
             if (configured) R.string.label_password_saved else R.string.label_password_missing,
         )
         binding.setupButton.text = getString(
-            if (configured) R.string.main_edit_password else R.string.main_save_password,
+            R.string.main_open_settings,
         )
     }
 
@@ -147,16 +150,6 @@ class MainActivity : AppCompatActivity() {
             DingScreen.NotDingTalk -> getString(R.string.launch_check_screen_other)
             DingScreen.Splash, DingScreen.Unknown -> getString(R.string.launch_check_screen_unknown)
         }
-
-    private fun runDecryptCheck() {
-        val cfg = repo.load() ?: return
-        val plain = repo.decryptPassword(cfg)
-        binding.decryptResultText.text = if (plain == null) {
-            getString(R.string.decrypt_failed)
-        } else {
-            getString(R.string.decrypt_ok, "•".repeat(plain.length.coerceAtMost(12)), plain.length)
-        }
-    }
 
     private fun openAccessibilitySettings() {
         val intent = Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS)

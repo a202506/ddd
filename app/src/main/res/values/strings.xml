@@ -8,11 +8,13 @@
     <string name="main_configured_help">已保存密码。使用下方按钮手动启动钉钉；如遇到登录页，应用会尝试自动填充密码。</string>
     <string name="main_accessibility_on">无障碍服务：✓ 已开启</string>
     <string name="main_accessibility_off">无障碍服务：✗ 未开启</string>
-    <string name="main_open_accessibility_settings">打开无障碍设置</string>
+    <string name="main_restore_accessibility">恢复无障碍</string>
+    <string name="main_accessibility_ready">无障碍已开启</string>
     <string name="main_launch_and_login">启动钉钉并辅助登录</string>
     <string name="main_decrypt_check">验证密码可解密</string>
     <string name="main_save_password">保存密码</string>
     <string name="main_edit_password">修改密码与权限</string>
+    <string name="main_open_settings">设置</string>
     <string name="label_password_saved">密码：已加密保存</string>
     <string name="label_password_missing">密码：未保存</string>
     <string name="decrypt_ok">解密 OK：%1$s（共 %2$d 位）</string>

@@ -40,6 +40,22 @@
             android:textAppearance="?attr/textAppearanceBodySmall"
             android:textColor="@color/text_secondary"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/decryptCheckButton"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/main_decrypt_check"/>
+
+        <TextView
+            android:id="@+id/decryptResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textAppearance="?attr/textAppearanceBodySmall"
+            android:textColor="@color/text_secondary"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -80,11 +80,24 @@
                         tools:text="密码：已加密保存"/>
 
                     <com.google.android.material.button.MaterialButton
+                        android:id="@+id/accessibilitySettingsButton"
+                        style="@style/Widget.Material3.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:enabled="false"
+                        android:text="@string/main_accessibility_ready"/>
+
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/launchAndCheckButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
-                        android:text="@string/main_launch_and_login"/>
+                        android:insetTop="10dp"
+                        android:insetBottom="10dp"
+                        android:minHeight="64dp"
+                        android:text="@string/main_launch_and_login"
+                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
 
                     <TextView
                         android:id="@+id/launchAndCheckResult"
@@ -96,57 +109,13 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/setupButton"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="12dp"
-                app:contentPadding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/section_setup"
-                        android:textAppearance="?attr/textAppearanceTitleMedium"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/setupButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/main_save_password"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/accessibilitySettingsButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/main_open_accessibility_settings"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/decryptCheckButton"
-                        style="@style/Widget.Material3.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/main_decrypt_check"/>
-
-                    <TextView
-                        android:id="@+id/decryptResultText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:textAppearance="?attr/textAppearanceBodySmall"
-                        android:textColor="@color/text_secondary"/>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+                android:text="@string/main_open_settings"/>
         </LinearLayout>
     </ScrollView>
 

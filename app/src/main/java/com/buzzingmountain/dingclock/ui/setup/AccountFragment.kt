@@ -12,6 +12,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.buzzingmountain.dingclock.R
+import com.buzzingmountain.dingclock.data.ConfigRepository
 import com.buzzingmountain.dingclock.databinding.FragmentSetupAccountBinding
 import kotlinx.coroutines.launch
 
@@ -20,6 +21,7 @@ class AccountFragment : Fragment() {
     private var _binding: FragmentSetupAccountBinding? = null
     private val binding get() = _binding!!
     private val vm: SetupViewModel by activityViewModels()
+    private val repo by lazy { ConfigRepository(requireContext()) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -55,6 +57,8 @@ class AccountFragment : Fragment() {
                     getString(R.string.password_pending_save)
                 }
         })
+
+        binding.decryptCheckButton.setOnClickListener { runDecryptCheck() }
     }
 
     override fun onDestroyView() {
@@ -66,5 +70,15 @@ class AccountFragment : Fragment() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         override fun afterTextChanged(s: Editable?) { onChange(s?.toString().orEmpty()) }
+    }
+
+    private fun runDecryptCheck() {
+        val cfg = vm.state.value
+        val plain = repo.decryptPassword(cfg)
+        binding.decryptResultText.text = if (plain == null) {
+            getString(R.string.decrypt_failed)
+        } else {
+            getString(R.string.decrypt_ok, "•".repeat(plain.length.coerceAtMost(12)), plain.length)
+        }
     }
 }
