@@ -34,10 +34,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         repo = ConfigRepository(this)
 
-        binding.versionText.text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
-        binding.setupButton.setOnClickListener {
-            startActivity(Intent(this, SetupActivity::class.java))
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            if (item.itemId == R.id.action_settings) {
+                startActivity(Intent(this, SetupActivity::class.java))
+                true
+            } else {
+                false
+            }
         }
+        binding.versionText.text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})"
         binding.accessibilitySettingsButton.setOnClickListener { openAccessibilitySettings() }
         binding.launchAndCheckButton.setOnClickListener { runLaunchAndCheck() }
     }
@@ -67,9 +72,6 @@ class MainActivity : AppCompatActivity() {
         )
         binding.passwordStateText.text = getString(
             if (configured) R.string.label_password_saved else R.string.label_password_missing,
-        )
-        binding.setupButton.text = getString(
-            R.string.main_open_settings,
         )
     }
 

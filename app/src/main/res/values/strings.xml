@@ -15,6 +15,7 @@
     <string name="main_save_password">保存密码</string>
     <string name="main_edit_password">修改密码与权限</string>
     <string name="main_open_settings">设置</string>
+    <string name="main_settings_short">设置</string>
     <string name="label_password_saved">密码：已加密保存</string>
     <string name="label_password_missing">密码：未保存</string>
     <string name="decrypt_ok">解密 OK：%1$s（共 %2$d 位）</string>
